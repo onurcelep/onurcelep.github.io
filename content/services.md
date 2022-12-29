@@ -23,7 +23,7 @@ __{{< svg "fas fa-flask-vial" >}}&emsp;E2E Test Framework Design__
 __{{< svg "fas fa-rocket" >}}&emsp;API Development__
 > _Allow different systems to communicate with each other by leveraging my API development services. I'll help you design and implement APIs that enable integration between different systems._
 
-__{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev & Management__
+__{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev. & Management__
 > _Developing and managing the hardware infrastructure needed for testing, including test environments and devices. By outsourcing this task to a specialist, you can ensure that your hardware infrastructure is set up and managed effectively._
 
 __{{< svg "fas fa-file" >}}&emsp;Technical Instruction & Documentation__ 
@@ -32,5 +32,5 @@ __{{< svg "fas fa-file" >}}&emsp;Technical Instruction & Documentation__
 __{{< svg "fas fa-gauge-high" >}}&emsp;Performance Analysis__
 > _Identify and analyze the performance of your system with our performance analysis services. We'll identify bottlenecks or other issues that may be impacting performance and provide recommendations for improvement. By optimizing the performance of your system, you can ensure that it is running at its best._
 
-__{{< svg "fas fa-cloud" >}}&emsp;Infrasturcture As Code__
+__{{< svg "fas fa-cloud" >}}&emsp;Infrastructure As Code__
 > _Automate the provisioning and management of your infrastructure with my infrastructure as code services. I'll use code (e.g. scripts, configuration files) to streamline and simplify your infrastructure management processes._
