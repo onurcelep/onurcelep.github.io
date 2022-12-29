@@ -1,0 +1,10 @@
+/* Recommended. Applies to all SVGs. */
+
+.icon{
+    position: relative;
+    top: 0.3rem;
+    bottom: 0.9rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
