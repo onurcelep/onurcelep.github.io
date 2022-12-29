@@ -12,7 +12,7 @@ __{{< svg "fas fa-sitemap" >}}&emsp;Architecture Analysis and Design__
 : _Analyze and design a custom architecture for your software system to ensure it is efficient, scalable, and maintainable._
 
 __{{< svg "fas fa-code" >}}&emsp;CI/CD Implementation__
-: Streamline your software development and delivery process with my CI/CD implementation services. I'll set up and configure the tools and processes > needed to automatically build, test, and deploy code changes.
+: _Streamline your software development and delivery process with my CI/CD implementation services. I'll set up and configure the tools and processes needed to automatically build, test, and deploy code changes._
 
 __{{< svg "fas fa-robot" >}}&emsp;Development tooling__
 : _Need help setting up the tools and infrastructure for your software development team? I can help you choose and configure the right tools for your needs._
