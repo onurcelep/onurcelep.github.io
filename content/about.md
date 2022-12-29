@@ -20,23 +20,18 @@ automation, data visualization , root cause analysis, technical way of working a
 
 #### Contracts
 
-    Tech Lead (3 Teams)
->[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Jan 2023)
+Tech Lead (3 Teams)
+: _[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Jan 2023)_
 
 ### Full-time Positions
+Staff Software Engineer
+: _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Feb 2022)_
 
-    Staff Software Engineer
+Senior DevOps Engineer
+: _[LUXOFT GmbH](https://www.luxoft.com/) (Berlin-DE, May 2018 - May 2020)_
 
->[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Feb 2022)
+QA Automation Engineer
+: _[trivago N.V](https://www.trivago.com/) (Dusseldorf-DE, Oct 2017 – May 2018)_
 
-    Senior DevOps Engineer
-
->[LUXOFT GmbH](https://www.luxoft.com/) (Berlin-DE, May 2018 - May 2020)
-
-    QA Automation Engineer
-
->[trivago N.V](https://www.trivago.com/) (Dusseldorf-DE, Oct 2017 – May 2018)
-
-    Software Developer in Test
-
->[ERICSSON](https://www.ericsson.com/en) (Izmir-TR, Sep 2013 – Sep 2017)
+Software Developer in Test
+: _[ERICSSON](https://www.ericsson.com/en) (Izmir-TR, Sep 2013 – Sep 2017)_
