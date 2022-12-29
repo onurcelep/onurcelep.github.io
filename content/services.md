@@ -26,7 +26,7 @@ __{{< svg "fas fa-rocket" >}}&emsp;API Development__
 __{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev & Management__
 >Developing and managing the hardware infrastructure needed for testing, including test environments and devices. By outsourcing this task to a specialist, you can ensure that your hardware infrastructure is set up and managed effectively.
 
-__{{< svg "fas fa-file" >}}&emsp;Technical Instruction and Documentation__ 
+__{{< svg "fas fa-file" >}}&emsp;Technical Instruction & Documentation__ 
 >Make it easy for others to understand and use your system or technology with my technical instruction and documentation services. I'll provide clear and concise documentation and training materials to help your team or clients get up to speed quickly.
 
 __{{< svg "fas fa-gauge-high" >}}&emsp;Performance Analysis__
