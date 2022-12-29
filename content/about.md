@@ -16,7 +16,7 @@ A passionate software engineer with 10+ years of experience. A detail-oriented, 
 ### Software Consultantcy
 
 Providing technical consultancy and leadership services in CI/CD design and implementation, release management and
-automation, data visualization , root cause analysis, technical way of working and KPI definition, team building areas.
+automation, data visualization, root cause analysis, technical way of working and KPI definition, team building areas.
 
 #### Contracts
 
