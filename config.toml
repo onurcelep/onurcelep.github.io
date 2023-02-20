@@ -16,7 +16,7 @@ author = "Onur Celep"
 # license = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA-4.0</a>'
 description = "Onur Celep's personal website"
 keywords = "blog,developer,personal"
-info = ["CI/CD & Test Automation", "Magician", ]
+info = ["DevOps & Test Automation", "Magician", ]
 avatarURL = "images/avatar.jpg"
 #gravatar = "onurcelep@gmail.com"
 dateFormat = "January 2, 2006"
