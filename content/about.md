@@ -21,7 +21,7 @@ automation, data visualization, root cause analysis, technical way of working an
 #### Contracts
 
 Tech Lead (3 Teams)
-: _[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Jan 2023)_
+: _[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Apr 2023)_
 
 ### Full-time Positions
 Staff Software Engineer

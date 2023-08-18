@@ -14,7 +14,7 @@ enableEmoji = true
 [params]
 author = "Onur Celep"
 # license = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA-4.0</a>'
-description = "Onur Celep's personal website"
+description = "Onur Celep | DevOps | Test Automation | Consultancy"
 keywords = "blog,developer,personal"
 info = ["DevOps & Test Automation", "Magician", ]
 avatarURL = "images/avatar.jpg"
