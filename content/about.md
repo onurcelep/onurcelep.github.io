@@ -34,4 +34,4 @@ QA Automation Engineer
 : _[trivago N.V](https://www.trivago.com/) (Dusseldorf-DE, Oct 2017 – May 2018)_
 
 Software Developer in Test
-: _[ERICSSON](https://www.ericsson.com/en) (Izmir-TR, Sep 2013 – Sep 2017)_
+: _[ERICSSON](https://www.ericsson.com/en) (Izmir-TR & Toronto-CA , Sep 2013 – Sep 2017)_
