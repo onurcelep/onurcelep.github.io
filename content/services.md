@@ -1,5 +1,6 @@
 +++
 title = "Offered Services"
+descp = "Offered professional devops services by Onur Celep"
 slug = "Services"
 tags = [
     "markdown",

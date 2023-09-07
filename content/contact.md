@@ -1,5 +1,6 @@
 +++
 title = "Contact Information"
+description = "Contact with Onur Celep for offered professional devops services"
 slug = "contact"
 tags = [
     "markdown",

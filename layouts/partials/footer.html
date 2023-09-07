@@ -9,11 +9,9 @@
       ·
       {{ if (and .Site.Params.license) }}
         {{ i18n "licensed_under" }} {{ .Site.Params.license | safeHTML }}
-      ·
       {{ end }}
       {{ if (and .Site.Params.commit .GitInfo) }}
         [<a href="{{ .Site.Params.commit }}/{{ .GitInfo.Hash }}" target="_blank" rel="noopener">{{ .GitInfo.AbbreviatedHash }}</a>]
       {{ end }}
     </section>
   </footer>
-  
