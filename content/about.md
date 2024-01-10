@@ -24,6 +24,7 @@ Tech Lead (3 Teams)
 : _[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Apr 2023)_
 
 ### Full-time Positions
+
 Staff Software Engineer
 : _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Feb 2022)_
 
