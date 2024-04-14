@@ -26,7 +26,7 @@ Tech Lead (3 Teams)
 ### Full-time Positions
 
 Staff Software Engineer
-: _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Feb 2022)_
+: _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Sep 2022)_
 
 Senior DevOps Engineer
 : _[LUXOFT GmbH](https://www.luxoft.com/) (Berlin-DE, May 2018 - May 2020)_
