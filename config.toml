@@ -137,3 +137,7 @@ url = "contact/"
 [module]
 [[module.imports]]
 path = 'github.com/UtkarshVerma/hugo-modules/svg-icon-system'
+
+
+[markup.goldmark.renderer]
+ unsafe = true

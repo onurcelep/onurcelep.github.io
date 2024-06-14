@@ -11,5 +11,6 @@ tags = [
 
 {{< svg "fas fa-envelope" >}}&emsp;[Email](mailto:onurcelep@gmail.com)
 
-{{< svg "fas fa-calendar-days" >}}&emsp;[Book a 30 min call](https://app.simplymeet.me/onurcelep/30min)
+{{< svg "fas fa-calendar-days" >}}&emsp; Book a call:
 
+{{< iframe "https://app.simplymeet.me/onurcelep/30min?is_widget=1&view=compact&specific-meeting-type=1" >}}
