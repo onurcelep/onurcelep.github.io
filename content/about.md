@@ -41,8 +41,17 @@ Software Developer in Test
 ### Tech Stack:
 
 ##### Languages: 
+```
 Python, Java EE, Groovy, C#, Bash, C
+```
 ##### Frameworks: 
+```
 Tornado, FastAPI, Robot Framework, Selenium
+```
 ##### Tools & Others: 
-AWS, k8s, Docker, Terraform, Yocto, RDBMS, Keycloak, Grafana, Prometheus, Ansible ,HP LoadRunner, JMeter, Behave, Gherkin, Pax-Exam, Junit, Jira, Xray, Confluence,Artifactory, Karaf, Postman,HP QC tooling, Fiddler, SOAP UI
+```
+AWS, k8s, Docker, Terraform, Ansible, Grafana, Prometheus,
+Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto,
+Oracle DB, PostgreSQL, HP LoadRunner, JMeter, Behave, Gherkin, 
+Pax-Exam, Junit, Postman, HP QC tooling, Fiddler, SOAP UI
+```
