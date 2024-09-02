@@ -13,7 +13,7 @@ A passionate software engineer with 10+ years of experience. A detail-oriented, 
 
 ## My Career
 
-### Software Consultantcy
+### Software Consultancy
 
 Providing technical consultancy and leadership services in CI/CD design and implementation, release management and
 automation, data visualization, root cause analysis, technical way of working and KPI definition, team building areas.
@@ -50,8 +50,9 @@ Tornado, FastAPI, Robot Framework, Selenium
 ```
 ##### Tools & Others: 
 ```
-AWS, k8s, Docker, Terraform, Ansible, Grafana, Prometheus,
-Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto,
+AWS, k8s, Docker, Jenkins, Gitlab CI, Github Actions,
+Terraform, Ansible, Grafana, Prometheus,Jira, Xray, 
+Confluence, Artifactory, Karaf, Keycloak, Yocto,
 Oracle DB, PostgreSQL, HP LoadRunner, JMeter, Behave, Gherkin, 
 Pax-Exam, Junit, Postman, HP QC tooling, Fiddler, SOAP UI
 ```
