@@ -54,5 +54,9 @@ Tornado, FastAPI, Robot Framework, Selenium
 ##### Tools & Others: 
 ```
 AWS, k8s, Docker, Jenkins, Gitlab CI, Github Actions,
-Terraform, Ansible, SaltStack, Grafana, Prometheus,Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto, Oracle DB, PostgreSQL, HP LoadRunner, JMeter, Behave, Gherkin, Pax-Exam, Junit, Postman, HP QC tooling, Fiddler, SOAP UI, Labgrid
+Terraform, Ansible, SaltStack, Grafana, Prometheus,
+Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, 
+Yocto, Oracle DB, PostgreSQL, HP LoadRunner, JMeter, 
+Behave, Gherkin, Pax-Exam, Junit, Postman, HP QC tooling, 
+Fiddler, SOAP UI, Labgrid
 ```
