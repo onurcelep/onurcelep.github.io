@@ -25,6 +25,9 @@ Tech Lead (3 Teams)
 
 ### Full-time Positions
 
+Software Engineer
+: _[Linutronix (Intel)](https://www.linutronix.de/) (Remote-DE, Sep 2024)_
+
 Staff Software Engineer
 : _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Sep 2022)_
 
@@ -42,7 +45,7 @@ Software Developer in Test
 
 ##### Languages: 
 ```
-Python, Java EE, Groovy, C#, Bash, C
+Python, Java EE, Groovy, C#, Bash, C, Go
 ```
 ##### Frameworks: 
 ```
@@ -51,8 +54,5 @@ Tornado, FastAPI, Robot Framework, Selenium
 ##### Tools & Others: 
 ```
 AWS, k8s, Docker, Jenkins, Gitlab CI, Github Actions,
-Terraform, Ansible, Grafana, Prometheus,Jira, Xray, 
-Confluence, Artifactory, Karaf, Keycloak, Yocto,
-Oracle DB, PostgreSQL, HP LoadRunner, JMeter, Behave, Gherkin, 
-Pax-Exam, Junit, Postman, HP QC tooling, Fiddler, SOAP UI
+Terraform, Ansible, SaltStack, Grafana, Prometheus,Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto, Oracle DB, PostgreSQL, HP LoadRunner, JMeter, Behave, Gherkin, Pax-Exam, Junit, Postman, HP QC tooling, Fiddler, SOAP UI, Labgrid
 ```

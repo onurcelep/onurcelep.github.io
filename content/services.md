@@ -21,11 +21,11 @@ __{{< svg "fas fa-robot" >}}&emsp;Development tooling__
 __{{< svg "fas fa-flask-vial" >}}&emsp;E2E Test Framework Design__
 : _Automate your end-to-end testing process with a custom E2E test framework designed by me. I'll make sure your workflow or user journey is thoroughly tested to ensure your system is functioning correctly._
 
+__{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev. & Management__
+: _Developing and managing the hardware infrastructure needed for testing, including test environments and devices. By outsourcing this task to a specialist, you can ensure that your hardware infrastructure is set up and managed effectively.I have done this in big scales_
+
 __{{< svg "fas fa-rocket" >}}&emsp;API Development__
 : _Allow different systems to communicate with each other by leveraging my API development services. I'll help you design and implement APIs that enable integration between different systems._
-
-__{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev. & Management__
-: _Developing and managing the hardware infrastructure needed for testing, including test environments and devices. By outsourcing this task to a specialist, you can ensure that your hardware infrastructure is set up and managed effectively._
 
 __{{< svg "fas fa-file" >}}&emsp;Technical Instruction & Documentation__ 
 : _Make it easy for others to understand and use your system or technology with my technical instruction and documentation services. I'll provide clear and concise documentation and training materials to help your team or clients get up to speed quickly._
