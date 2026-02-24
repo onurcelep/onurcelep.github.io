@@ -1,9 +1,10 @@
 +++
-title = "About"
-description = "Who is Onur in general and how his career look like"
+title = "About Onur Celep — Platform & CI/CD Engineer"
+description = "Onur Celep — Platform and CI/CD engineer with 10+ years of experience in DevOps, test automation, and cloud infrastructure. Based in Germany, available for freelance consulting."
 date = "2022-12-09"
 aliases = ["about-us", "about-onur", "contact"]
 author = "Onur Celep"
+tags = ["DevOps engineer", "platform engineering", "CI/CD", "freelance consultant"]
 +++
 
 
@@ -41,22 +42,20 @@ Software Developer in Test
 : _[ERICSSON](https://www.ericsson.com/en) (Izmir-TR & Toronto-CA , Sep 2013 – Sep 2017)_
 
 
-### Tech Stack:
+### Tech Stack
 
-##### Languages: 
-```
-Python, Java EE, Groovy, C#, Bash, C, Go
-```
-##### Frameworks: 
-```
-Tornado, FastAPI, Robot Framework, Selenium
-```
-##### Tools & Others: 
-```
-AWS, k8s, Docker, Jenkins, Gitlab CI, Github Actions, step-ca
-Saltstack, Terraform, Ansible, Grafana, Prometheus,
-Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, 
-Yocto, Oracle DB, PostgreSQL, HP LoadRunner, JMeter, 
-Behave, Gherkin, Pax-Exam, Junit, Postman, HP QC tooling, 
-Fiddler, SOAP UI, Labgrid
-```
+**Languages:** Python, Java EE, Groovy, C#, Bash, C, Go
+
+**Frameworks:** Tornado, FastAPI, Robot Framework, Selenium
+
+**Cloud & Infrastructure:** AWS, Kubernetes, Docker, Terraform, Ansible, Saltstack
+
+**CI/CD:** Jenkins, GitLab CI, GitHub Actions
+
+**Observability:** Grafana, Prometheus, Vector
+
+**Testing:** HP LoadRunner, JMeter, Behave, Gherkin, Pax-Exam, JUnit, Postman
+
+**Databases:** Oracle DB, PostgreSQL
+
+**Other:** Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto, step-ca, Labgrid

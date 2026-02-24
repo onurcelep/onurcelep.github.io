@@ -1,37 +1,29 @@
 +++
-title = "Offered Services"
-descp = "Offered professional devops services by Onur Celep"
+title = "DevOps & CI/CD Consulting Services"
+description = "Freelance DevOps and CI/CD consulting services by Onur Celep — architecture design, CI/CD implementation, test automation, infrastructure as code, and API development."
 slug = "Services"
-tags = [
-    "markdown",
-    "css",
-    "html",
-]
+tags = ["DevOps", "CI/CD", "test automation", "infrastructure as code", "consulting"]
 +++
 
-__{{< svg "fas fa-sitemap" >}}&emsp;Architecture Analysis and Design__
-: _Analyze and design a custom architecture for your software system to ensure it is efficient, scalable, and maintainable._
+10+ years of engineering experience across Mercedes-Benz, Intel, and Ericsson. Available for consulting, architecture review, and hands-on implementation.
 
-__{{< svg "fas fa-code" >}}&emsp;CI/CD Implementation__
-: _Streamline your software development and delivery process with my CI/CD implementation services. I'll set up and configure the tools and processes needed to automatically build, test, and deploy code changes._
-
-__{{< svg "fas fa-robot" >}}&emsp;Development tooling__
-: _Need help setting up the tools and infrastructure for your software development team? I can help you choose and configure the right tools for your needs._
-
-__{{< svg "fas fa-flask-vial" >}}&emsp;E2E Test Framework Design__
-: _Automate your end-to-end testing process with a custom E2E test framework designed by me. I'll make sure your workflow or user journey is thoroughly tested to ensure your system is functioning correctly._
-
-__{{< svg "fas fa-microchip" >}}&emsp;Test Hardware Dev. & Management__
-: _Developing and managing the hardware infrastructure needed for testing, including test environments and devices. By outsourcing this task to a specialist, you can ensure that your hardware infrastructure is set up and managed effectively.I have done this in big scales_
-
-__{{< svg "fas fa-rocket" >}}&emsp;API Development__
-: _Allow different systems to communicate with each other by leveraging my API development services. I'll help you design and implement APIs that enable integration between different systems._
-
-__{{< svg "fas fa-file" >}}&emsp;Technical Instruction & Documentation__ 
-: _Make it easy for others to understand and use your system or technology with my technical instruction and documentation services. I'll provide clear and concise documentation and training materials to help your team or clients get up to speed quickly._
-
-__{{< svg "fas fa-gauge-high" >}}&emsp;Performance Analysis__
-: _Identify and analyze the performance of your system with our performance analysis services. We'll identify bottlenecks or other issues that may be impacting performance and provide recommendations for improvement. By optimizing the performance of your system, you can ensure that it is running at its best._
+__{{< svg "fas fa-sitemap" >}}&emsp;CI/CD Architecture & Implementation__
+: _End-to-end pipeline design and delivery. Proven at scale with 200+ engineer organizations._
 
 __{{< svg "fas fa-cloud" >}}&emsp;Infrastructure As Code__
-: _Automate the provisioning and management of your infrastructure with my infrastructure as code services. I'll use code (e.g. scripts, configuration files) to streamline and simplify your infrastructure management processes._
+: _Reproducible, version-controlled infrastructure. Cloud and on-prem._
+
+__{{< svg "fas fa-flask-vial" >}}&emsp;Test Automation & E2E Frameworks__
+: _Test strategy, framework design, and implementation — from unit to full end-to-end coverage._
+
+__{{< svg "fas fa-microchip" >}}&emsp;Test Infrastructure & Hardware Management__
+: _Physical and virtual test environments at scale. Device farms, hardware-in-the-loop, lab infrastructure. Automotive and embedded domain expertise._
+
+__{{< svg "fas fa-robot" >}}&emsp;Platform Engineering & Developer Tooling__
+: _Internal developer platforms, containerized environments, observability, and self-service deployment workflows._
+
+__{{< svg "fas fa-gauge-high" >}}&emsp;Performance Testing & Analysis__
+: _Load testing, bottleneck identification, root cause analysis, and actionable optimization recommendations._
+
+__{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
+: _DevOps transformation, team structure, KPI definition, and ways of working. Previously led 3 engineering teams at Mercedes-Benz._
