@@ -1,5 +1,5 @@
 +++
-title = "Contact Onur Celep — Freelance DevOps Consultant"
+title = "Contact"
 description = "Get in touch with Onur Celep for freelance DevOps, CI/CD, and platform engineering consulting services. Book a call or send an email."
 slug = "contact"
 tags = ["contact", "freelance", "consulting"]

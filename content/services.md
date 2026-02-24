@@ -1,5 +1,5 @@
 +++
-title = "DevOps & CI/CD Consulting Services"
+title = "Services"
 description = "Freelance DevOps and CI/CD consulting services by Onur Celep — architecture design, CI/CD implementation, test automation, infrastructure as code, and API development."
 slug = "Services"
 tags = ["DevOps", "CI/CD", "test automation", "infrastructure as code", "consulting"]

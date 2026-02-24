@@ -1,5 +1,5 @@
 +++
-title = "About Onur Celep — Platform & CI/CD Engineer"
+title = "About"
 description = "Onur Celep — Platform and CI/CD engineer with 10+ years of experience in DevOps, test automation, and cloud infrastructure. Based in Germany, available for freelance consulting."
 date = "2022-12-09"
 aliases = ["about-us", "about-onur", "contact"]
