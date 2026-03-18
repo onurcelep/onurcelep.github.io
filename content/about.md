@@ -44,18 +44,18 @@ Software Developer in Test
 
 ### Tech Stack
 
-**Languages:** Python, Java EE, Groovy, C#, Bash, C, Go
+**Languages:** Python, Java EE, Groovy, C#, Shell, C, Go
 
-**Frameworks:** Tornado, FastAPI, Robot Framework, Selenium
+**Frameworks:** Tornado, FastAPI, Typer, Textual
 
-**Cloud & Infrastructure:** AWS, Kubernetes, Docker, Terraform, Ansible, Saltstack
+**Cloud & Infrastructure:** AWS, K8s, Docker, Terraform, Saltstack, Keycloak, Step-CA
 
 **CI/CD:** Jenkins, GitLab CI, GitHub Actions
 
-**Observability:** Grafana, Prometheus, Vector
+**Observability:** Grafana, Prometheus, Vector , Alloy
 
-**Testing:** HP LoadRunner, JMeter, Behave, Gherkin, Pax-Exam, JUnit, Postman
+**Testing:** Robot Framework, Selenium , Labgrid
 
 **Databases:** Oracle DB, PostgreSQL
 
-**Other:** Jira, Xray, Confluence, Artifactory, Karaf, Keycloak, Yocto, step-ca, Labgrid
+**Other:** Jira, Xray, Confluence, Artifactory, Keycloak, Yocto, Claude CLI
