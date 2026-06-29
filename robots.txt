@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://onurcelep.github.io/sitemap.xml
