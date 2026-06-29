@@ -1,0 +1,234 @@
+<!doctype html><html lang=en><head><title>SSH certificate access to a device lab, end to end · Onur Celep</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Onur Celep"><meta name=description content="A guide to giving people and CI short-lived, identity-bound SSH access to a fleet of test devices: why a CA, Keycloak as the OIDC provisioner backed by LDAP, certificate principals as authorization, and the host side with renewal timers and a reservation-aware access script. The writeup I wish I had when I started."><meta name=keywords content="DevOps consultant,CI/CD engineer,freelance DevOps,test automation,infrastructure as code,platform engineering,Kubernetes,AWS,Jenkins,GitHub Actions,Berlin,Germany"><meta name=twitter:card content="summary"><meta name=twitter:title content="SSH certificate access to a device lab, end to end"><meta name=twitter:description content="A guide to giving people and CI short-lived, identity-bound SSH access to a fleet of test devices: why a CA, Keycloak as the OIDC provisioner backed by LDAP, certificate principals as authorization, and the host side with renewal timers and a reservation-aware access script. The writeup I wish I had when I started."><meta property="og:url" content="https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/"><meta property="og:site_name" content="Onur Celep"><meta property="og:title" content="SSH certificate access to a device lab, end to end"><meta property="og:description" content="A guide to giving people and CI short-lived, identity-bound SSH access to a fleet of test devices: why a CA, Keycloak as the OIDC provisioner backed by LDAP, certificate principals as authorization, and the host side with renewal timers and a reservation-aware access script. The writeup I wish I had when I started."><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-06-29T00:00:00+00:00"><meta property="article:modified_time" content="2026-06-29T00:00:00+00:00"><meta property="article:tag" content="Ssh"><meta property="article:tag" content="Security"><meta property="article:tag" content="Infrastructure"><meta property="article:tag" content="Keycloak"><meta property="article:tag" content="Pki"><link rel=canonical href=https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/><link rel=preload href=/fonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.4b392a85107b91dbdabc528edf014a6ab1a30cd44cafcd5325c8efe796794fca.css integrity="sha256-SzkqhRB7kdvavFKO3wFKarGjDNRMr81TJcjv55Z5T8o=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.ad48f476275974885bdc03d5251e3cdbe1678c54a63ff772376b0ed2adc468dd.css integrity="sha256-rUj0didZdIhb3APVJR482+FnjFSmP/dyN2sO0q3EaN0=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/test.min.7a491876d51e6d668ff12708f43130caa480c556db97a37dcbac9f43f663c3cd.css integrity="sha256-ekkYdtUebWaP8ScI9DEwyqSAxVbbl6N9y6yfQ/Zjw80=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/images/favicon.svg sizes=any><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://onurcelep.github.io/>Onur Celep
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fa-solid fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/services/>Services</a></li><li class=navigation-item><a class=navigation-link href=/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/contact/>Contact</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/>SSH certificate access to a device lab, end to end</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa-solid fa-calendar" aria-hidden=true></i>
+<time datetime=2026-06-29T00:00:00Z>June 29, 2026
+</time></span><span class=reading-time><i class="fa-solid fa-clock" aria-hidden=true></i>
+13-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
+<span class=tag><a href=/tags/ssh/>Ssh</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/security/>Security</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/infrastructure/>Infrastructure</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/keycloak/>Keycloak</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/pki/>Pki</a></span></div></div></header><div class=post-content><p>I run a fleet of embedded Linux test benches. Each bench is a small gateway
+(a Raspberry Pi) with a board under test wired to it. People and CI jobs need
+to SSH into those gateways and boards to flash images, drive tests, and poke
+at failures. The question that looks trivial and is not: <strong>who is allowed to
+SSH where, and how do you keep that true over time?</strong></p><p>This is the guide I wish I had when I started. It walks the whole picture
+first, then explains each part: why you want a certificate authority at all,
+how Keycloak (backed by your company directory over LDAP) becomes the thing
+that decides identity, how a CA turns that identity into a short-lived SSH
+certificate, and what has to happen on each device so that a certificate
+actually opens a session. None of the parts are hard on their own. The value
+is in seeing how they connect.</p><p>The examples use <a href=https://smallstep.com/docs/step-ca/ class=external-link target=_blank rel=noopener>step-ca</a>,
+<a href=https://www.keycloak.org/ class=external-link target=_blank rel=noopener>Keycloak</a>, and OpenSSH, but the model is
+portable. Swap Keycloak for Azure AD or Okta, swap step-ca for any CA that
+speaks OIDC, and the shape is identical.</p><h2 id=why-not-just-ssh-keys>Why not just SSH keys
+<a class=heading-link href=#why-not-just-ssh-keys><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Every lab starts the same way. A shared root password in a wiki. Then someone
+sets up SSH keys, which is better, until you count the work: every device
+needs every authorized public key, and that is a matrix that grows with
+people times devices. Then someone leaves, or a contractor&rsquo;s three months
+end, and nobody removes their key from twenty devices, because the only
+priority anyone actually has is &ldquo;make the tests pass.&rdquo;</p><p>The root problem is <strong>lifecycle</strong>. An SSH key in <code>authorized_keys</code> is valid
+forever, on every device it was ever copied to, until a human actively
+deletes it. In a test lab, no human is actively deleting anything.</p><p>Certificates flip the model. Instead of copying many keys to many devices,
+every device trusts one <strong>certificate authority</strong>. People do not hold standing
+access; they hold the ability to ask the CA for a <strong>short-lived certificate</strong>
+after proving who they are. A certificate is good for hours, not forever. When
+it expires, access is simply gone. No revocation lists, no cleanup playbooks.
+A contractor&rsquo;s access disappears on its own when their certificate is not
+renewed.</p><p>That single idea, &ldquo;devices trust a CA, not a pile of keys,&rdquo; is the whole
+reason a CA exists in this design.</p><h2 id=the-full-picture>The full picture
+<a class=heading-link href=#the-full-picture><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Here is the entire system on one page. Read it once now; the rest of the post
+zooms into each box.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-fallback data-lang=fallback><span style=display:flex><span>   Company directory (LDAP / Active Directory)
+</span></span><span style=display:flex><span>            |  users, groups
+</span></span><span style=display:flex><span>            v
+</span></span><span style=display:flex><span>       +----------+        Keycloak federates the directory.
+</span></span><span style=display:flex><span>       | Keycloak |        You log in with corporate credentials.
+</span></span><span style=display:flex><span>       +----------+        Group membership becomes roles.
+</span></span><span style=display:flex><span>            |
+</span></span><span style=display:flex><span>            |  OIDC: identity proven, roles in a signed token
+</span></span><span style=display:flex><span>            v
+</span></span><span style=display:flex><span>       +---------+         step-ca trusts Keycloak as an OIDC provisioner.
+</span></span><span style=display:flex><span>       | step-ca |         It validates the token, then signs your SSH key.
+</span></span><span style=display:flex><span>       +---------+         A template turns token claims into principals.
+</span></span><span style=display:flex><span>            |
+</span></span><span style=display:flex><span>            |  short-lived SSH certificate (principals = authorization)
+</span></span><span style=display:flex><span>            v
+</span></span><span style=display:flex><span>   +-------------------------------+
+</span></span><span style=display:flex><span>   |  Test bench gateway / device  |   Each host:
+</span></span><span style=display:flex><span>   |                               |    - trusts the CA (TrustedUserCAKeys)
+</span></span><span style=display:flex><span>   |   sshd                        |    - has its own host certificate
+</span></span><span style=display:flex><span>   |    -&gt; AuthorizedPrincipalsCmd |    - runs a script that decides which
+</span></span><span style=display:flex><span>   |        (the access script)    |      principals are allowed right now
+</span></span><span style=display:flex><span>   +-------------------------------+
+</span></span></code></pre></div><p>Two things travel through this pipeline. The first is <strong>identity</strong>: LDAP knows
+who you are, Keycloak proves it, step-ca stamps it into a certificate. The
+second is <strong>authorization</strong>, and it rides inside the certificate as a list of
+<strong>principals</strong>: short labels like <code>you@example.com</code>, an environment tag, a
+role, or a reservation owner ID. The device side never has to know who you
+are. It only has to answer one question: does this certificate carry a
+principal I am willing to accept right now?</p><p>Everything below is just the detail of those two flows.</p><h2 id=identity-keycloak-backed-by-ldap>Identity: Keycloak backed by LDAP
+<a class=heading-link href=#identity-keycloak-backed-by-ldap><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>You almost certainly already have a source of truth for &ldquo;who works here&rdquo;: a
+company LDAP or Active Directory. The goal is to not invent a second one.</p><p>Keycloak sits in front of that directory as the identity provider. In
+Keycloak this is <strong>User Federation</strong>: you point Keycloak at your LDAP server
+with a read-only bind, and from then on people log in with their normal
+corporate username and password. No separate lab accounts to create or
+deprovision; when someone is removed from the directory, they can no longer
+authenticate, full stop.</p><p>You do not need much LDAP detail to make this work. The two pieces that
+matter for access control are:</p><ul><li><strong>Users</strong> come from LDAP. Keycloak validates the login against the
+directory.</li><li><strong>Groups</strong> come from LDAP too, and a Keycloak group/role mapper turns
+&ldquo;member of LDAP group <code>lab-admins</code>&rdquo; into a Keycloak role like <code>admin</code>. That
+role is the thing that will eventually become a certificate principal.</li></ul><p>So the chain is: directory group -> Keycloak role -> token claim ->
+certificate principal -> access on the device. That is the whole reason LDAP is
+in the picture. It is how &ldquo;this person is in the platform team&rdquo; becomes &ldquo;this
+person may SSH to prod benches,&rdquo; without anyone editing a file on a device.</p><p>For non-interactive callers (CI), you do not use a human login. You create a
+Keycloak <strong>client</strong> with the OIDC client-credentials grant: CI presents a
+client id and secret, gets a token, and never opens a browser.</p><h2 id=the-ca-step-ca-with-keycloak-as-the-provisioner>The CA: step-ca with Keycloak as the provisioner
+<a class=heading-link href=#the-ca-step-ca-with-keycloak-as-the-provisioner><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>step-ca is the certificate authority. The key concept is the <strong>provisioner</strong>:
+a configured way to obtain a certificate. We configure an <strong>OIDC
+provisioner</strong> that trusts Keycloak.</p><p>In step-ca&rsquo;s <code>ca.json</code>, an OIDC provisioner is essentially a client id plus
+the issuer&rsquo;s discovery URL:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=font-weight:700>&#34;type&#34;</span>: <span style=font-style:italic>&#34;OIDC&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=font-weight:700>&#34;name&#34;</span>: <span style=font-style:italic>&#34;keycloak&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=font-weight:700>&#34;clientID&#34;</span>: <span style=font-style:italic>&#34;test-infra-step&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=font-weight:700>&#34;configurationEndpoint&#34;</span>: <span style=font-style:italic>&#34;https://idp.example.com/realms/lab/.well-known/openid-configuration&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=font-weight:700>&#34;claims&#34;</span>: { <span style=font-weight:700>&#34;enableSSHCA&#34;</span>: <span style=font-weight:700>true</span>, <span style=font-weight:700>&#34;defaultSSHCertDuration&#34;</span>: <span style=font-style:italic>&#34;24h&#34;</span> }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The flow from a user&rsquo;s machine:</p><ol><li>The user runs a small wrapper script (or CLI) that asks step-ca for an SSH
+certificate via the <code>keycloak</code> provisioner.</li><li>step-ca redirects them through Keycloak&rsquo;s OAuth2 device flow. The user logs
+in with corporate credentials (which Keycloak checks against LDAP).</li><li>Keycloak returns a signed token containing the user&rsquo;s email and roles.</li><li>step-ca validates that token against Keycloak&rsquo;s published keys, then signs
+the user&rsquo;s SSH public key into a certificate.</li></ol><p>The certificate is short-lived by policy: 24h for users, 8h for CI. There is
+nothing to revoke because there is nothing long-lived to revoke.</p><h3 id=principals-turning-identity-into-authorization>Principals: turning identity into authorization
+<a class=heading-link href=#principals-turning-identity-into-authorization><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>A signed certificate is not interesting until it carries the right
+<strong>principals</strong>. step-ca decides what goes in using a template. Ours builds the
+principal list from the token claims, roughly:</p><ul><li>the user&rsquo;s <strong>email</strong> (a stable personal identity),</li><li>any <strong>roles</strong> the user has on the relevant client (this is where the LDAP
+group -> Keycloak role mapping surfaces, for example <code>admin</code> or
+<code>lab-dev</code>),</li><li>an optional <strong><code>host_id</code></strong> of the form <code>hostname/username</code>, which is the hook
+for reservation-gated access (explained later).</li></ul><p>The result is a certificate whose principal list literally describes what the
+holder is allowed to be:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-fallback data-lang=fallback><span style=display:flex><span>Principals:
+</span></span><span style=display:flex><span>    jane@example.com
+</span></span><span style=display:flex><span>    lab-dev
+</span></span><span style=display:flex><span>    jane-laptop/jane
+</span></span></code></pre></div><p>There is one subtlety worth calling out because it confused me early on. For
+CI, the <code>host_id</code> is injected by a tiny Keycloak <strong>script mapper</strong> that copies
+a <code>host_id</code> form parameter from the token request into a token claim, so it is
+vouched for by the IdP. For an interactive user, <code>host_id</code> is supplied
+client-side and is therefore <em>not</em> cryptographically guaranteed by the IdP.
+That is fine, and intentional: the device side does not trust <code>host_id</code> on its
+own. It cross-checks it against a live reservation, so a forged <code>host_id</code> buys
+nothing. Defense in depth, not blind trust.</p><h2 id=the-host-side-part-1-trusting-the-ca-and-staying-trusted>The host side, part 1: trusting the CA and staying trusted
+<a class=heading-link href=#the-host-side-part-1-trusting-the-ca-and-staying-trusted><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Now the device. Two responsibilities live here, and people usually only think
+about the first one.</p><p><strong>Responsibility 1: trust the CA, and prove your own identity.</strong> A gateway has
+to (a) trust user certificates the CA signed, and (b) present its own host
+certificate so clients stop seeing &ldquo;the authenticity of host &mldr; can&rsquo;t be
+established&rdquo; prompts. Both come from a provisioning step that, on each host:</p><ol><li>signs the host&rsquo;s SSH key with step-ca, producing a host certificate,</li><li>writes the CA&rsquo;s public key to <code>/etc/ssh/ca.pub</code>,</li><li>updates <code>sshd_config</code> to wire it together:</li></ol><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-fallback data-lang=fallback><span style=display:flex><span># trust user certs signed by our CA
+</span></span><span style=display:flex><span>TrustedUserCAKeys /etc/ssh/ca.pub
+</span></span><span style=display:flex><span># present our own host certificate
+</span></span><span style=display:flex><span>HostKey         /etc/ssh/ssh_host_ed25519_key
+</span></span><span style=display:flex><span>HostCertificate /etc/ssh/ssh_host_ed25519_key-cert.pub
+</span></span></code></pre></div><p>In our setup this is driven by configuration management (Salt) that runs a
+provisioning script with the CA URL and OIDC client credentials. It is
+idempotent and validity-aware: a full re-provision only happens if the host
+certificate is missing or already expired, so re-running it self-heals a
+device that fell behind.</p><p><strong>Responsibility 2: stay trusted without human help.</strong> Host certificates
+expire too (ours are 30 days). Renewal must be automatic, and here is a trap I
+paid for: do not use cron for this on appliance-style hosts. On some of our
+devices <code>/etc</code> is a read-only overlay mounted <code>noexec</code>, so cron&rsquo;s <code>run-parts</code>
+cannot execute a script dropped into <code>/etc/cron.weekly</code>, and the certificate
+silently expired. The fix is a <strong>systemd timer</strong>:</p><ul><li>a <code>rotate-ssh-certificate.{service,timer}</code> pair runs daily,</li><li>with <code>Persistent=true</code>, so a run missed while a bench was powered off is
+caught up at next boot,</li><li>the script renews with <code>step ssh renew</code>, which authenticates using the
+existing host certificate and key, so <strong>no OIDC secret is needed</strong> for
+routine renewal,</li><li>renewal only acts once the certificate is within a few days of expiry.</li></ul><p><code>step ssh renew</code> cannot resurrect an already-expired certificate, so the
+validity-aware Salt re-provision above is the recovery path for a bench that
+went fully stale. Renew before expiry with the timer; re-provision after
+expiry with the state. Two mechanisms, clear division of labor.</p><h2 id=the-host-side-part-2-the-access-script>The host side, part 2: the access script
+<a class=heading-link href=#the-host-side-part-2-the-access-script><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Trusting the CA answers &ldquo;is this certificate genuine.&rdquo; It does not answer &ldquo;is
+this particular person allowed in right now.&rdquo; That is a separate decision, and
+it is the part I most wish someone had drawn for me up front.</p><p>OpenSSH gives you the hook: instead of a static <code>AuthorizedPrincipalsFile</code>,
+you can point sshd at a program with <code>AuthorizedPrincipalsCommand</code>. sshd runs
+it on every certificate login and passes the certificate. The program prints
+the principals it is willing to accept; if any printed line matches any
+principal in the certificate, the login succeeds.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-fallback data-lang=fallback><span style=display:flex><span># sshd runs this for every cert login, passing user, cert type, cert blob
+</span></span><span style=display:flex><span>AuthorizedPrincipalsCommand /usr/local/bin/ssh-principals-check.sh %u %t %k
+</span></span><span style=display:flex><span>AuthorizedPrincipalsCommandUser root
+</span></span></code></pre></div><p>Our <code>ssh-principals-check.sh</code> extracts the certificate&rsquo;s principals with
+<code>ssh-keygen -L</code>, then applies a small, readable ladder of checks driven by a
+config file (so each gate is a feature flag you can turn on per device):</p><ol><li><strong>Admin bypass.</strong> If the certificate carries the <code>admin</code> principal, allow.
+This is the break-glass path and it is deliberately first.</li><li><strong>CI bypass.</strong> If it carries the environment-scoped CI principal (for
+example <code>lab-prod-ci</code>), allow. CI always reserves devices through the lab
+framework before touching them, so this is safe and avoids coupling access
+to ephemeral container hostnames.</li><li><strong>Environment gating</strong> (optional). If enabled, the certificate must carry
+<code>&lt;project>-&lt;env></code>, for example <code>lab-dev</code>. This is how a dev certificate is
+kept off prod benches.</li><li><strong>Reservation gating</strong> (optional). If enabled, the certificate must carry a
+principal matching the device&rsquo;s <em>current reservation owner</em>. More on this
+next.</li></ol><p>When more than one gate is on, they are <strong>AND</strong> conditions: a valid
+certificate is necessary but not sufficient; it also has to clear every
+enabled gate. The script logs each decision to syslog (<code>auth.info</code> /
+<code>auth.warning</code>), which makes &ldquo;why was I denied&rdquo; a one-line grep instead of a
+mystery.</p><h2 id=reservation-gated-access-the-part-that-makes-it-a-lab>Reservation-gated access: the part that makes it a lab
+<a class=heading-link href=#reservation-gated-access-the-part-that-makes-it-a-lab><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Authentication proves who you are. In a <em>shared</em> lab you also want
+authorization tied to &ldquo;you actually have this device booked right now.&rdquo;</p><p>Most device labs have some reservation system so that two people do not grab
+the same board at once (we use <a href=https://labgrid.org/ class=external-link target=_blank rel=noopener>labgrid</a>, an open-source
+orchestration framework for hardware labs, but the idea is generic). You
+reserve a device and get exclusive use of its lab operations. The catch is
+that plain SSH to the gateway is a side channel the reservation system does
+not control. Reservation gating closes that gap so that SSH access follows the
+reservation.</p><p>It is two cooperating pieces on each gateway:</p><ul><li>A small <strong>sync service</strong> watches the reservation system and writes the
+current reservation owner to a state file. The owner is recorded in the same
+<code>hostname/username</code> form that appears as the <code>host_id</code> principal in a user&rsquo;s
+certificate.</li><li>The <strong>access script</strong> above, in its reservation-gating step, reads that
+state file and only accepts a certificate whose principals include the
+current owner.</li></ul><p>The effect, from a user&rsquo;s seat (host names and the SSH login user are just
+examples here):</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=font-style:italic># reserve the device through the lab&#39;s reservation system</span>
+</span></span><span style=display:flex><span>reserve bench-02
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># SSH now works: the cert&#39;s owner principal matches the reservation owner</span>
+</span></span><span style=display:flex><span>ssh dev@bench-02      <span style=font-style:italic># granted</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># without a reservation, the same valid certificate is refused</span>
+</span></span><span style=display:flex><span>ssh dev@bench-02      <span style=font-style:italic># denied: no matching reservation</span>
+</span></span></code></pre></div><p>This is what makes a forged client-side <code>host_id</code> harmless: the principal has
+to match a reservation the system actually granted. Certificate and
+reservation both have to agree.</p><p>A note on failure modes, because they matter in a lab people depend on: if the
+reservation system is unreachable or the sync service stalls, it keeps the
+last known owner rather than locking everyone out. A monitoring outage should
+not evict the person actively using a device. Roll it out gradually too: gate
+one device first, watch the logs, then expand. Every gate is a feature flag
+for exactly this reason.</p><h2 id=one-login-start-to-finish>One login, start to finish
+<a class=heading-link href=#one-login-start-to-finish><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>To make the moving parts concrete, here is what actually happens when a
+developer runs <code>ssh dev@bench-02</code>:</p><ol><li>Earlier that day they ran the auth wrapper, logged into Keycloak (checked
+against LDAP), and step-ca signed a 24h certificate carrying their email,
+their roles, and their <code>host_id</code>.</li><li>They reserved <code>bench-02</code>; the gateway&rsquo;s sync service recorded them as the
+current owner.</li><li>sshd on the gateway sees a certificate, verifies it was signed by the
+trusted CA and is unexpired.</li><li>sshd runs the access script with the certificate. Not admin, not CI;
+environment gate passes (<code>lab-dev</code> present); reservation gate passes
+(<code>host_id</code> matches the recorded owner).</li><li>The script prints the matching principals, sshd accepts, session opens.</li></ol><p>No key was copied to the device. No password was typed. Tomorrow the
+certificate expires and the whole thing has to be re-earned, which is exactly
+what you want.</p><h2 id=where-to-start>Where to start
+<a class=heading-link href=#where-to-start><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>If you take one thing from this, let it be the order to build it in, because
+trying to do it all at once is how this stalls.</p><ol><li><strong>Stand up step-ca with a Keycloak OIDC provisioner, and trust the CA on
+your hosts.</strong> This alone replaces key distribution with &ldquo;log in with your
+company account, get a certificate, SSH works.&rdquo; It is the real win and
+everything else is optional on top.</li><li><strong>Add host certificates</strong> at the same time. It is little extra effort and
+it kills <code>known_hosts</code> prompts forever.</li><li><strong>Automate host renewal with a systemd timer</strong>, not cron, especially on
+appliance images with a <code>noexec</code> <code>/etc</code>.</li><li><strong>Add environment gating</strong> only if you have a real dev/prod split worth
+enforcing.</li><li><strong>Add reservation gating</strong> last, and only on devices that multiple people
+and CI actually contend over. For a bench only you use, it is overhead.</li></ol><p>For two people and three devices this is overkill; use keys. The moment you
+catch yourself asking &ldquo;did we ever remove that contractor&rsquo;s access?&rdquo; or &ldquo;which
+CI runner can reach which device?&rdquo;, certificates answer both by construction,
+and your existing company directory is already most of the way there.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+2026
+Onur Celep</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script><script async defer data-website-id=f34eee1c-8d81-47bd-b5e1-c63d3fd71e64 src=https://cloud.umami.is/script.js></script></body></html>

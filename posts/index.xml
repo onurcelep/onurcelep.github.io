@@ -5,4 +5,8 @@ device that does this well is the &lt;a href="https://github.com/LuckfoxTECH/kvm
 PicoKVM&lt;/a&gt;. The problem: there was no
 Python client for it. So I wrote one and published it.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/onurcelep/picokvm-client" class="external-link" target="_blank" rel="noopener"&gt;&lt;code&gt;picokvm-client&lt;/code&gt;&lt;/a&gt; is a small,
-typed, synchronous client and CLI for the PicoKVM, on PyPI:&lt;/p&gt;</description></item></channel></rss>
+typed, synchronous client and CLI for the PicoKVM, on PyPI:&lt;/p&gt;</description></item><item><title>SSH certificate access to a device lab, end to end</title><link>https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/</link><pubDate>Mon, 29 Jun 2026 00:00:00 +0000</pubDate><guid>https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/</guid><description>&lt;p&gt;I run a fleet of embedded Linux test benches. Each bench is a small gateway
+(a Raspberry Pi) with a board under test wired to it. People and CI jobs need
+to SSH into those gateways and boards to flash images, drive tests, and poke
+at failures. The question that looks trivial and is not: &lt;strong&gt;who is allowed to
+SSH where, and how do you keep that true over time?&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>
