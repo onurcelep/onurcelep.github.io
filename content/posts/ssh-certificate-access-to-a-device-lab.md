@@ -17,8 +17,10 @@ first, then explains each part: why you want a certificate authority at all,
 how Keycloak (backed by your company directory over LDAP) becomes the thing
 that decides identity, how a CA turns that identity into a short-lived SSH
 certificate, and what has to happen on each device so that a certificate
-actually opens a session. None of the parts are hard on their own. The value
-is in seeing how they connect.
+actually opens a session. One piece I underestimated, and spend real time on
+below, is how each device learns *who currently holds it*, so that SSH access
+can follow a live reservation. None of the parts are hard on their own. The
+value is in seeing how they connect.
 
 The examples use [step-ca](https://smallstep.com/docs/step-ca/),
 [Keycloak](https://www.keycloak.org/), and OpenSSH, but the model is
@@ -77,17 +79,28 @@ zooms into each box.
    |    -> AuthorizedPrincipalsCmd |    - runs a script that decides which
    |        (the access script)    |      principals are allowed right now
    +-------------------------------+
+            ^
+            |  who holds THIS device right now (a local state file)
+            |
+       +--------------------+   A sync service on each host watches the
+       | Reservation system |   reservation system and records the current
+       +--------------------+   owner, in the same identity form used as a
+                                certificate principal.
 ```
 
-Two things travel through this pipeline. The first is **identity**: LDAP knows
-who you are, Keycloak proves it, step-ca stamps it into a certificate. The
-second is **authorization**, and it rides inside the certificate as a list of
-**principals**: short labels like `you@example.com`, an environment tag, a
-role, or a reservation owner ID. The device side never has to know who you
-are. It only has to answer one question: does this certificate carry a
-principal I am willing to accept right now?
+Three things feed the decision on the device. The first is **identity**: LDAP
+knows who you are, Keycloak proves it, step-ca stamps it into a certificate.
+The second is **authorization**, and it rides inside the certificate as a list
+of **principals**: short labels like `you@example.com`, an environment tag, a
+role, or a reservation owner ID. The third does *not* ride in the certificate
+at all: each host separately learns who currently holds it, straight from the
+lab's reservation system, and feeds that into the same check. That third input
+is the one people forget, so it gets its own section below.
 
-Everything below is just the detail of those two flows.
+The device side never has to know who you are. It only has to answer one
+question: does this certificate carry a principal I am willing to accept right
+now, given who holds the device? Everything below is just the detail of those
+flows.
 
 ## Identity: Keycloak backed by LDAP
 
@@ -294,6 +307,50 @@ It is two cooperating pieces on each gateway:
 - The **access script** above, in its reservation-gating step, reads that
   state file and only accepts a certificate whose principals include the
   current owner.
+
+### How reservation ownership reaches the host
+
+This sync is easy to wave away and is surprisingly load-bearing, so here is
+what it actually has to do. Your reservation system tracks, per device, who
+holds it. In our case (labgrid) the coordinator exposes two fields per device:
+
+- **acquired**: the current owner, set when someone locks the device and
+  cleared on release,
+- **allowed**: zero or more extra users the owner has granted access to.
+
+A sync service on each gateway turns that into a tiny local state file the
+access script can read with no network call on the hot path:
+
+```
+# /var/lib/.../current_owner
+jane-laptop/jane          # line 1: the acquired owner
+bob-laptop/bob            # lines 2+: allowed users (optional)
+```
+
+The access script grants access if any certificate principal matches any line.
+That `allowed` list is how a reservation holder pulls in a colleague without
+either of them being an admin.
+
+How the data gets from the reservation system into that file is an
+implementation choice. We have done it two ways:
+
+- **Polling**: a systemd timer periodically asks the coordinator for this
+  device's owner (`labgrid-client show`) and rewrites the state file. A few
+  lines of shell, with a lag equal to the poll interval.
+- **Event-driven**: a long-lived process subscribes to the coordinator over
+  gRPC and rewrites the state file the instant a reservation changes. No lag,
+  and it can export metrics for a dashboard, at the cost of a persistent
+  connection.
+
+This is the one place where "use whatever tool you already have" needs a
+caveat, so check it before you commit. Whatever runs your reservations has to
+let a host answer one question: *who holds this device right now?* Confirm your
+tool can either be **queried** for the current owner per device, or better,
+**subscribed to** for change events, and that the owner identity it reports can
+be mapped to something you can put in a certificate (an email, a username, a
+`hostname/username` pair). If your current tool cannot expose ownership at all,
+that is the thing to fix, or the reason to pick a different one. Everything
+else in reservation gating is downstream of that one capability.
 
 The effect, from a user's seat (host names and the SSH login user are just
 examples here):
