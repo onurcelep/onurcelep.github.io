@@ -3,7 +3,7 @@
 <label class="menu-button float-right" for=menu-toggle><i class="fa-solid fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/services/>Services</a></li><li class=navigation-item><a class=navigation-link href=/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/contact/>Contact</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=https://onurcelep.github.io/posts/ssh-certificate-access-to-a-device-lab/>SSH certificate access to a device lab, end to end</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa-solid fa-calendar" aria-hidden=true></i>
 <time datetime=2026-06-29T00:00:00Z>June 29, 2026
 </time></span><span class=reading-time><i class="fa-solid fa-clock" aria-hidden=true></i>
-13-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
+15-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
 <span class=tag><a href=/tags/ssh/>Ssh</a>
 </span><span class=separator>•</span>
 <span class=tag><a href=/tags/security/>Security</a>
@@ -21,8 +21,10 @@ first, then explains each part: why you want a certificate authority at all,
 how Keycloak (backed by your company directory over LDAP) becomes the thing
 that decides identity, how a CA turns that identity into a short-lived SSH
 certificate, and what has to happen on each device so that a certificate
-actually opens a session. None of the parts are hard on their own. The value
-is in seeing how they connect.</p><p>The examples use <a href=https://smallstep.com/docs/step-ca/ class=external-link target=_blank rel=noopener>step-ca</a>,
+actually opens a session. One piece I underestimated, and spend real time on
+below, is how each device learns <em>who currently holds it</em>, so that SSH access
+can follow a live reservation. None of the parts are hard on their own. The
+value is in seeing how they connect.</p><p>The examples use <a href=https://smallstep.com/docs/step-ca/ class=external-link target=_blank rel=noopener>step-ca</a>,
 <a href=https://www.keycloak.org/ class=external-link target=_blank rel=noopener>Keycloak</a>, and OpenSSH, but the model is
 portable. Swap Keycloak for Azure AD or Okta, swap step-ca for any CA that
 speaks OIDC, and the shape is identical.</p><h2 id=why-not-just-ssh-keys>Why not just SSH keys
@@ -66,13 +68,24 @@ zooms into each box.</p><div class=highlight><pre tabindex=0 style=background-co
 </span></span><span style=display:flex><span>   |    -&gt; AuthorizedPrincipalsCmd |    - runs a script that decides which
 </span></span><span style=display:flex><span>   |        (the access script)    |      principals are allowed right now
 </span></span><span style=display:flex><span>   +-------------------------------+
-</span></span></code></pre></div><p>Two things travel through this pipeline. The first is <strong>identity</strong>: LDAP knows
-who you are, Keycloak proves it, step-ca stamps it into a certificate. The
-second is <strong>authorization</strong>, and it rides inside the certificate as a list of
-<strong>principals</strong>: short labels like <code>you@example.com</code>, an environment tag, a
-role, or a reservation owner ID. The device side never has to know who you
-are. It only has to answer one question: does this certificate carry a
-principal I am willing to accept right now?</p><p>Everything below is just the detail of those two flows.</p><h2 id=identity-keycloak-backed-by-ldap>Identity: Keycloak backed by LDAP
+</span></span><span style=display:flex><span>            ^
+</span></span><span style=display:flex><span>            |  who holds THIS device right now (a local state file)
+</span></span><span style=display:flex><span>            |
+</span></span><span style=display:flex><span>       +--------------------+   A sync service on each host watches the
+</span></span><span style=display:flex><span>       | Reservation system |   reservation system and records the current
+</span></span><span style=display:flex><span>       +--------------------+   owner, in the same identity form used as a
+</span></span><span style=display:flex><span>                                certificate principal.
+</span></span></code></pre></div><p>Three things feed the decision on the device. The first is <strong>identity</strong>: LDAP
+knows who you are, Keycloak proves it, step-ca stamps it into a certificate.
+The second is <strong>authorization</strong>, and it rides inside the certificate as a list
+of <strong>principals</strong>: short labels like <code>you@example.com</code>, an environment tag, a
+role, or a reservation owner ID. The third does <em>not</em> ride in the certificate
+at all: each host separately learns who currently holds it, straight from the
+lab&rsquo;s reservation system, and feeds that into the same check. That third input
+is the one people forget, so it gets its own section below.</p><p>The device side never has to know who you are. It only has to answer one
+question: does this certificate carry a principal I am willing to accept right
+now, given who holds the device? Everything below is just the detail of those
+flows.</p><h2 id=identity-keycloak-backed-by-ldap>Identity: Keycloak backed by LDAP
 <a class=heading-link href=#identity-keycloak-backed-by-ldap><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><p>You almost certainly already have a source of truth for &ldquo;who works here&rdquo;: a
 company LDAP or Active Directory. The goal is to not invent a second one.</p><p>Keycloak sits in front of that directory as the identity provider. In
@@ -189,7 +202,32 @@ current reservation owner to a state file. The owner is recorded in the same
 <code>hostname/username</code> form that appears as the <code>host_id</code> principal in a user&rsquo;s
 certificate.</li><li>The <strong>access script</strong> above, in its reservation-gating step, reads that
 state file and only accepts a certificate whose principals include the
-current owner.</li></ul><p>The effect, from a user&rsquo;s seat (host names and the SSH login user are just
+current owner.</li></ul><h3 id=how-reservation-ownership-reaches-the-host>How reservation ownership reaches the host
+<a class=heading-link href=#how-reservation-ownership-reaches-the-host><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h3><p>This sync is easy to wave away and is surprisingly load-bearing, so here is
+what it actually has to do. Your reservation system tracks, per device, who
+holds it. In our case (labgrid) the coordinator exposes two fields per device:</p><ul><li><strong>acquired</strong>: the current owner, set when someone locks the device and
+cleared on release,</li><li><strong>allowed</strong>: zero or more extra users the owner has granted access to.</li></ul><p>A sync service on each gateway turns that into a tiny local state file the
+access script can read with no network call on the hot path:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-gdscript3 data-lang=gdscript3><span style=display:flex><span><span style=font-style:italic># /var/lib/.../current_owner</span>
+</span></span><span style=display:flex><span>jane-laptop/jane          <span style=font-style:italic># line 1: the acquired owner</span>
+</span></span><span style=display:flex><span>bob-laptop/bob            <span style=font-style:italic># lines 2+: allowed users (optional)</span>
+</span></span></code></pre></div><p>The access script grants access if any certificate principal matches any line.
+That <code>allowed</code> list is how a reservation holder pulls in a colleague without
+either of them being an admin.</p><p>How the data gets from the reservation system into that file is an
+implementation choice. We have done it two ways:</p><ul><li><strong>Polling</strong>: a systemd timer periodically asks the coordinator for this
+device&rsquo;s owner (<code>labgrid-client show</code>) and rewrites the state file. A few
+lines of shell, with a lag equal to the poll interval.</li><li><strong>Event-driven</strong>: a long-lived process subscribes to the coordinator over
+gRPC and rewrites the state file the instant a reservation changes. No lag,
+and it can export metrics for a dashboard, at the cost of a persistent
+connection.</li></ul><p>This is the one place where &ldquo;use whatever tool you already have&rdquo; needs a
+caveat, so check it before you commit. Whatever runs your reservations has to
+let a host answer one question: <em>who holds this device right now?</em> Confirm your
+tool can either be <strong>queried</strong> for the current owner per device, or better,
+<strong>subscribed to</strong> for change events, and that the owner identity it reports can
+be mapped to something you can put in a certificate (an email, a username, a
+<code>hostname/username</code> pair). If your current tool cannot expose ownership at all,
+that is the thing to fix, or the reason to pick a different one. Everything
+else in reservation gating is downstream of that one capability.</p><p>The effect, from a user&rsquo;s seat (host names and the SSH login user are just
 examples here):</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span><span style=font-style:italic># reserve the device through the lab&#39;s reservation system</span>
 </span></span><span style=display:flex><span>reserve bench-02
 </span></span><span style=display:flex><span>
