@@ -1,7 +1,8 @@
 +++
 title = "SSH certificate access to a device lab, end to end"
 date = 2026-06-29
-description = "A guide to giving people and CI short-lived, identity-bound SSH access to a fleet of test devices: why a CA, Keycloak as the OIDC provisioner backed by LDAP, certificate principals as authorization, and the host side with renewal timers and a reservation-aware access script. The writeup I wish I had when I started."
+description = "A practical guide to short-lived, identity-bound SSH access for a device lab: a CA, Keycloak over LDAP as the OIDC provisioner, and certificate principals as authorization."
+keywords = ["ssh certificates", "ssh certificate authority", "step-ca", "keycloak oidc", "ssh ca ldap", "authorizedprincipalscommand", "short-lived ssh access", "zero trust ssh"]
 tags = ["ssh", "security", "infrastructure", "keycloak", "pki"]
 draft = false
 +++

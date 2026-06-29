@@ -1,18 +1,23 @@
 baseURL = "https://onurcelep.github.io/"
 title = "Onur Celep"
 theme = ["hugo-coder"]
-languageCode = "en"
 defaultContentLanguage = "en"
 pagerSize = 20
 pygmentsStyle = "bw"
 pygmentsCodeFences = true
 pygmentsCodeFencesGuessSyntax = true
 enableEmoji = true
+# Emit robots.txt from layouts/robots.txt (references the sitemap)
+enableRobotsTXT = true
 # Enable Disqus comments
 # disqusShortname = "yourdiscussshortname"
 
 [params]
 author = "Onur Celep"
+# Default social-share image (1200x630). Hugo's internal opengraph and
+# twitter_cards templates fall back to this for any page without its own
+# images, which also upgrades the Twitter card to summary_large_image.
+images = ["images/og-default.png"]
 umami = { siteID = "f34eee1c-8d81-47bd-b5e1-c63d3fd71e64", scriptURL = "https://cloud.umami.is/script.js" }
 # license = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA-4.0</a>'
 description = "Onur Celep — Freelance Platform & CI/CD Engineer offering DevOps consulting, test automation, and infrastructure as code services in Germany and remote."
@@ -117,7 +122,8 @@ weight = 4
 url = "https://www.linkedin.com/in/onurcelep/"
 
 [languages.en]
-languageName = ":uk:"
+locale = "en-US"
+label = ":uk:"
 
 [[languages.en.menu.main]]
 name = "About"

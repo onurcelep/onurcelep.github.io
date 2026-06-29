@@ -1,7 +1,8 @@
 +++
 title = "Reverse-engineering the Luckfox PicoKVM into a Python client"
 date = 2026-06-29
-description = "There was no Python client for the Luckfox PicoKVM, so I built one. Notes on reverse-engineering its JSON-RPC API, the design of a typed client and CLI, and how I tested it without touching hardware."
+description = "How I reverse-engineered the Luckfox PicoKVM's JSON-RPC API and built picokvm-client: a typed Python client and CLI, tested without hardware."
+keywords = ["picokvm", "luckfox picokvm", "jetkvm", "python kvm client", "json-rpc", "reverse engineering", "hardware automation", "cli"]
 tags = ["python", "reverse-engineering", "embedded", "testing", "hardware"]
 draft = false
 +++
