@@ -57,37 +57,28 @@ reason a CA exists in this design.
 Here is the entire system on one page. Read it once now; the rest of the post
 zooms into each box.
 
-```
-   Company directory (LDAP / Active Directory)
-            |  users, groups
-            v
-       +----------+        Keycloak federates the directory.
-       | Keycloak |        You log in with corporate credentials.
-       +----------+        Group membership becomes roles.
-            |
-            |  OIDC: identity proven, roles in a signed token
-            v
-       +---------+         step-ca trusts Keycloak as an OIDC provisioner.
-       | step-ca |         It validates the token, then signs your SSH key.
-       +---------+         A template turns token claims into principals.
-            |
-            |  short-lived SSH certificate (principals = authorization)
-            v
-   +-------------------------------+
-   |  Test bench gateway / device  |   Each host:
-   |                               |    - trusts the CA (TrustedUserCAKeys)
-   |   sshd                        |    - has its own host certificate
-   |    -> AuthorizedPrincipalsCmd |    - runs a script that decides which
-   |        (the access script)    |      principals are allowed right now
-   +-------------------------------+
-            ^
-            |  who holds THIS device right now (a local state file)
-            |
-       +--------------------+   A sync service on each host watches the
-       | Reservation system |   reservation system and records the current
-       +--------------------+   owner, in the same identity form used as a
-                                certificate principal.
-```
+{{< diagram >}}
+- title: Company directory
+  kicker: LDAP / Active Directory
+  desc: Users and groups live here. Nothing is provisioned per device.
+- title: Keycloak
+  kicker: identity provider
+  edge: users, groups
+  desc: Federates the directory. You log in with corporate credentials; group membership becomes roles.
+- title: step-ca
+  kicker: certificate authority
+  edge: signed token · identity + roles
+  desc: Trusts Keycloak as an OIDC provisioner. Validates the token, then signs your SSH key. A template turns claims into <code>principals</code>.
+- title: Test bench gateway / device
+  kicker: sshd → AuthorizedPrincipalsCommand
+  edge: short-lived SSH certificate
+  desc: Trusts the CA, holds its own host certificate, and runs a script that decides which principals are allowed <strong>right now</strong>.
+  aside:
+    title: Reservation system
+    tag: out of band
+    branch: who holds it now
+    desc: A per-host sync service watches the reservation system and records the current owner in the same identity form used as a principal.
+{{< /diagram >}}
 
 Three things feed the decision on the device. The first is **identity**: LDAP
 knows who you are, Keycloak proves it, step-ca stamps it into a certificate.

@@ -3,9 +3,6 @@ title = "Onur Celep"
 theme = ["hugo-coder"]
 defaultContentLanguage = "en"
 pagerSize = 20
-pygmentsStyle = "bw"
-pygmentsCodeFences = true
-pygmentsCodeFencesGuessSyntax = true
 enableEmoji = true
 # Emit robots.txt from layouts/robots.txt (references the sitemap)
 enableRobotsTXT = true
@@ -152,3 +149,10 @@ path = 'github.com/UtkarshVerma/hugo-modules/svg-icon-system'
 
 [markup.goldmark.renderer]
  unsafe = true
+
+# Use CSS-class-based syntax highlighting so the theme's light/dark chroma
+# stylesheets (_syntax.scss / _syntax_dark.scss) apply and follow the color
+# scheme. Inline styles (noClasses=true, the default) would freeze code blocks
+# in one palette and break them in dark mode.
+[markup.highlight]
+  noClasses = false

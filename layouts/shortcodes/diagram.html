@@ -1,0 +1,64 @@
+{{- /*
+  diagram — a theme-aware flow graphic.
+
+  Inner content is a YAML list of stages (auto-numbered top to bottom):
+
+    {{< diagram >}}
+    - title: Company directory
+      kicker: LDAP / Active Directory
+      desc: The single source of truth for people and groups.
+    - title: Keycloak
+      kicker: identity provider
+      edge: users, groups          # label on the arrow ENTERING this stage
+      desc: Federates the directory; group membership becomes roles.
+    - title: Test bench gateway
+      kicker: sshd → AuthorizedPrincipalsCommand
+      edge: short-lived SSH certificate
+      desc: Decides which <code>principals</code> are allowed right now.
+      aside:                       # optional out-of-band lateral input
+        title: Reservation system
+        tag: out of band
+        branch: who holds it now
+        desc: A per-host sync records the current owner as a principal.
+    {{< /diagram >}}
+
+  `desc`, `branch` and `title` may contain inline HTML (e.g. <code>…</code>).
+*/ -}}
+{{- $stages := .Inner | transform.Unmarshal -}}
+<div class="dg">
+{{- range $i, $s := $stages }}
+  {{- with $s.edge }}
+  <div class="dg-edge">
+    <span class="dg-edge-label">{{ . | safeHTML }}</span>
+    <span class="dg-edge-line"></span>
+    <span class="dg-edge-tip"></span>
+  </div>
+  {{- end }}
+  {{- if $s.aside }}
+  <div class="dg-row">
+    <article class="dg-node">
+      <span class="dg-marker">{{ add $i 1 }}</span>
+      <h4 class="dg-title">{{ $s.title | safeHTML }}</h4>
+      {{- with $s.kicker }}<p class="dg-kicker">{{ . | safeHTML }}</p>{{ end }}
+      {{- with $s.desc }}<p class="dg-desc">{{ . | safeHTML }}</p>{{ end }}
+    </article>
+    <div class="dg-branch">
+      {{- with $s.aside.branch }}<span class="dg-branch-label">{{ . | safeHTML }}</span>{{ end }}
+      <span class="dg-branch-arrow"></span>
+    </div>
+    <aside class="dg-node dg-aside">
+      {{- with $s.aside.tag }}<span class="dg-tag">{{ . | safeHTML }}</span>{{ end }}
+      <h4 class="dg-title">{{ $s.aside.title | safeHTML }}</h4>
+      {{- with $s.aside.desc }}<p class="dg-desc">{{ . | safeHTML }}</p>{{ end }}
+    </aside>
+  </div>
+  {{- else }}
+  <article class="dg-node">
+    <span class="dg-marker">{{ add $i 1 }}</span>
+    <h4 class="dg-title">{{ $s.title | safeHTML }}</h4>
+    {{- with $s.kicker }}<p class="dg-kicker">{{ . | safeHTML }}</p>{{ end }}
+    {{- with $s.desc }}<p class="dg-desc">{{ . | safeHTML }}</p>{{ end }}
+  </article>
+  {{- end }}
+{{- end }}
+</div>
