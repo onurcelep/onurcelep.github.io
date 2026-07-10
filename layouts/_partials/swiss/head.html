@@ -1,6 +1,7 @@
 <script>document.documentElement.classList.add('js')</script>
 {{ partial "head/meta-tags.html" . }}
 {{ partial "head/extensions.html" . }}
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
 
 {{ $css := resources.Get "scss/swiss.scss" | toCSS (dict "targetPath" "css/swiss.css") }}
 {{ if hugo.IsServer }}
