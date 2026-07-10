@@ -1,0 +1,4 @@
+{{- /* Swiss redesign: minimal heading render hook. Keeps the anchor id for
+       deep-linking, but drops the theme's Font Awesome link icon + sr-only
+       "Link to heading" text (the theme CSS that hid/rendered them is gone). */ -}}
+<h{{ .Level }} id="{{ .Anchor | safeURL }}">{{ .Text | safeHTML }}</h{{ .Level }}>
