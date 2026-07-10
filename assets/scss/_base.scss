@@ -87,6 +87,8 @@ main.wrap {
   color: var(--accent);
 }
 
+.brand-sm { display: none; }   // "OC" monogram — shown only on mobile (see _responsive)
+
 .frame .frame-nav a {
   pointer-events: auto;
   color: var(--ink);

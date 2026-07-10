@@ -26,6 +26,13 @@
   letter-spacing: -.03em;
 }
 
+// Each headline line is a clip-wipe span. inline-block makes clip-path use the
+// full (possibly wrapped) box as its reference, so a line that wraps on narrow
+// screens still reveals fully instead of losing its wrapped row.
+#hero h1 .clip {
+  display: inline-block;
+}
+
 #hero h1 .accent {
   color: var(--accent);
 }
