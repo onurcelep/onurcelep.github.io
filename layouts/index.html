@@ -1,0 +1,52 @@
+{{ define "content" }}
+<section id="hero">
+  <div class="herogrid">
+    <div>
+      <div class="rulewrap"><span class="label">Est. 2013</span><span class="rule"></span><span class="num">Germany / Remote</span></div>
+      <h1><span class="clip">Delivery systems</span><br><span class="clip">that just <span class="accent">work</span>.</span></h1>
+      <p class="sub reveal">Freelance Platform &amp; CI/CD engineer. 10+ years of pipelines, test automation, and cloud infrastructure — Germany &amp; remote.</p>
+    </div>
+    <figure class="portrait reveal">
+      <span class="tick tl"></span><span class="tick br"></span>
+      {{ with .Site.Params.avatarURL }}<img src="{{ . | relURL }}" alt="{{ $.Site.Params.author }}">{{ end }}
+      <figcaption><span>{{ .Site.Params.author }}</span><span>Fig. 01</span></figcaption>
+    </figure>
+  </div>
+  <div class="scrollcue reveal">Scroll</div>
+</section>
+
+{{ $sections := slice
+  (dict "num" "01" "label" "About"    "url" "/about/"    "h" "Turning messy delivery into calm, automated flow." "lead" "A detail-oriented engineer specializing in CI/CD and test automation systems — across automotive, travel, and telecom." "more" "Read the full story")
+  (dict "num" "02" "label" "Services" "url" "/services/" "h" "What I help teams do." "lead" "CI/CD design, test automation, infrastructure as code, and technical leadership." "more" "See all services")
+}}
+{{ range $sections }}
+<section data-animate>
+  <div class="rulewrap"><span class="num">{{ .num }} / 04</span><span class="rule"></span><span class="label">{{ .label }}</span></div>
+  <h2 class="reveal">{{ .h }}</h2>
+  <p class="lead reveal">{{ .lead }}</p>
+  <a class="morelink reveal" href="{{ .url | relURL }}">{{ .more }} →</a>
+</section>
+{{ end }}
+
+<section id="blog" data-animate>
+  <div class="rulewrap"><span class="num">03 / 04</span><span class="rule"></span><span class="label">Writing</span></div>
+  <h2 class="reveal">Notes from the field.</h2>
+  <div class="posts">
+    {{ range first 3 (where .Site.RegularPages "Section" "posts") }}
+    <a class="post reveal" href="{{ .RelPermalink }}">
+      <h4>{{ .Title }}</h4><span class="date">{{ .Date.Format "2006" }}</span>
+    </a>
+    {{ end }}
+  </div>
+  <a class="morelink reveal" href="{{ "/posts/" | relURL }}">Read the blog →</a>
+</section>
+
+<section id="contact" data-animate>
+  <div class="rulewrap"><span class="num">04 / 04</span><span class="rule"></span><span class="label">Contact</span></div>
+  <h2 class="reveal">Let's build something <span class="accent">dependable</span>.</h2>
+  <p class="lead reveal">Available for freelance consulting in Germany and remote.</p>
+  <div class="social">
+    {{ range .Site.Params.social }}<a class="reveal" href="{{ .url }}">{{ .name }}</a>{{ end }}
+  </div>
+</section>
+{{ end }}
