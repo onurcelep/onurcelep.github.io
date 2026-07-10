@@ -220,10 +220,16 @@ h2 {
   gap: 1.4rem;
   align-items: baseline;
   transition: background .2s;
+  color: var(--ink);          // .post is an <a>: don't inherit browser link colors
+  text-decoration: none;
 }
 
 .post:hover {
   background: var(--paper2);
+}
+
+.post:hover h4 {
+  color: var(--accent);
 }
 
 .post .pn {
