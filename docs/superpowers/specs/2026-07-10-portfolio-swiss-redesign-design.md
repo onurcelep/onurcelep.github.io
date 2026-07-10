@@ -48,12 +48,11 @@ HTML). It is the visual source of truth for this spec.
 1. **Scope:** whole site restyled to Swiss/print (not landing-only).
 2. **Landing sections:** teasers that link out to the existing real pages.
 3. **Three.js:** left out entirely.
-4. **Dark mode:** default to a **single paper (light) theme**; remove the hugo-coder
-   light/dark toggle. A dark Swiss variant is a possible later addition, out of scope
-   here. *(Confirm at spec review.)*
+4. **Dark mode:** **single paper (light) theme**; remove the hugo-coder light/dark
+   toggle. A dark Swiss variant is a possible later addition, out of scope here.
+   *(Confirmed.)*
 5. **Fonts:** system grotesk + system mono stack (zero external font requests). A
-   self-hosted grotesk (e.g. a variable display face) is a possible later upgrade.
-   *(Confirm at spec review.)*
+   self-hosted grotesk is a possible later upgrade. *(Confirmed.)*
 6. **Accent:** rust `#c0392b`. Paper `#efe9dd`, ink `#1a1a1a`, muted `#6b6459`.
 7. **Motion:** consistent across the site — the shared scroll vocabulary (rule
    draw-ins, heading/content fade-ups, rust progress bar) applies to **every page**.
@@ -194,10 +193,9 @@ one-time x-ray intro plays and fades → static minimal page remains.
 - Keep the reveal module generic (no per-page coupling), consistent with the
   maintainability-first / agnostic-artifacts preference.
 
-## Open Questions (confirm at review)
+## Open Questions
 
-1. Single paper theme + remove the light/dark toggle — OK? (Default: yes.)
-2. System font stack for now — OK? (Default: yes; self-hosted grotesk later.)
+None outstanding — all design decisions confirmed.
 
 ## Reference
 
