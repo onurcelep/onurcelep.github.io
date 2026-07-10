@@ -8,8 +8,8 @@
 .prose h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; margin: 2.4rem 0 .8rem; letter-spacing: -.01em; }
 .prose h3, .prose h4 { font-weight: 800; margin: 1.6rem 0 .5rem; }
 .prose p { margin: 0 0 1.1rem; }
-.prose a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--hair); }
-.prose a:hover { border-color: var(--accent); }
+.prose a { color: var(--accent-ink); text-decoration: none; border-bottom: 1px solid var(--hair); }
+.prose a:hover { color: var(--accent); border-color: var(--accent); }
 .prose ul, .prose ol { margin: 0 0 1.1rem 1.3rem; }
 .prose li { margin: .3rem 0; }
 .prose code { font-family: var(--mono); font-size: .88em; background: var(--paper2); padding: .1em .4em; border-radius: .35rem; }

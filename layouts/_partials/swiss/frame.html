@@ -1,7 +1,7 @@
 <div id="prog"></div>
 <header class="frame" role="banner">
   <div class="frame-top">
-    <a class="brand" href="{{ "/" | relURL }}"><span class="brand-lg">{{ .Site.Params.author | default .Site.Title }}</span><span class="brand-sm">OC</span></a>
+    <a class="brand" href="{{ "/" | relURL }}">{{ .Site.Params.author | default .Site.Title }}</a>
     <nav class="frame-nav" aria-label="Main">
       {{ range .Site.Menus.main }}<a href="{{ .URL | relURL }}">{{ .Name }}</a>{{ end }}
     </nav>
