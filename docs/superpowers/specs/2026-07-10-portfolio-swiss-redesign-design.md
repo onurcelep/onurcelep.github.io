@@ -55,6 +55,10 @@ HTML). It is the visual source of truth for this spec.
    self-hosted grotesk (e.g. a variable display face) is a possible later upgrade.
    *(Confirm at spec review.)*
 6. **Accent:** rust `#c0392b`. Paper `#efe9dd`, ink `#1a1a1a`, muted `#6b6459`.
+7. **Motion:** consistent across the site — the shared scroll vocabulary (rule
+   draw-ins, heading/content fade-ups, rust progress bar) applies to **every page**.
+   The one-time **x-ray code reveal is landing-only** (a signature moment); inner
+   pages skip it and load straight into reading.
 
 ## Visual System (tokens)
 
@@ -108,8 +112,10 @@ Each is independently understandable, testable, and swappable.
   96%)`.
 - **Reduced motion:** if `prefers-reduced-motion: reduce`, skip the intro entirely and
   render content in its final state (no reveal, no fade-ups).
-- **Depends on:** 2 (GSAP), 4 (substrate content). **Consumed by:** landing (and any
-  page opting into scroll reveals).
+- The scroll-reveal behaviors run on **every page**; the x-ray intro is **landing-only**
+  (guarded by an `.is-home` flag or presence of `#xray`).
+- **Depends on:** 2 (GSAP), 4 (substrate content). **Consumed by:** all pages (scroll
+  reveals); landing only (x-ray intro).
 
 ### 4. Code-substrate data (`data/substrate.yaml` or `assets/js/substrate.js`)
 - A single, editable list of realistic code lines spanning Onur's stack (FastAPI,
@@ -136,7 +142,9 @@ Each is independently understandable, testable, and swappable.
 ### 6. Restyled inner pages (`layouts/`)
 - About, Services, single/list templates, Contact re-skinned to the Swiss system
   (page frame, grotesk headings, rules, mono labels). Content unchanged (markdown as
-  is). Optional light GSAP rule draw-ins on scroll; content always present without JS.
+  is). They carry the **same shared scroll motion as the landing** (rule draw-ins,
+  fade-ups, progress bar) — but **not** the x-ray reveal. Content always present
+  without JS and under `prefers-reduced-motion`.
 - The existing `{{< diagram >}}` shortcode and its `assets/css/test.css` styles are
   reconciled with the new tokens (diagrams already theme-aware; retune to paper
   palette; the dark-mode branch can be dropped with the toggle).
@@ -190,7 +198,6 @@ one-time x-ray intro plays and fades → static minimal page remains.
 
 1. Single paper theme + remove the light/dark toggle — OK? (Default: yes.)
 2. System font stack for now — OK? (Default: yes; self-hosted grotesk later.)
-3. Any inner page that should keep richer motion, or all calm/static?
 
 ## Reference
 
