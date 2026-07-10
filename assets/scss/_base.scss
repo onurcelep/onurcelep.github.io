@@ -62,6 +62,17 @@ main.wrap {
   text-transform: uppercase;
 }
 
+.frame .brand {
+  pointer-events: auto;      // re-enable: .frame sets pointer-events:none
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.frame .brand:hover {
+  color: var(--accent);
+}
+
 .frame .frame-nav a {
   pointer-events: auto;
   color: var(--ink);
