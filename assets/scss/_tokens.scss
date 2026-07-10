@@ -1,0 +1,12 @@
+// Swiss/print design tokens — single source of truth for palette + fonts.
+:root {
+  --paper:   #efe9dd;
+  --paper2:  #e7e0d1;
+  --ink:     #1a1a1a;
+  --muted:   #6b6459;
+  --accent:  #c0392b;
+  --line:    #1a1a1a;
+  --hair:    rgba(26,26,26,.18);
+  --grotesk: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono:    "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+}

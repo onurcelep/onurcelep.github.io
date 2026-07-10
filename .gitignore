@@ -3,3 +3,6 @@
 resources
 public
 .DS_Store
+.claude
+# Brainstorming visual companion
+.superpowers/

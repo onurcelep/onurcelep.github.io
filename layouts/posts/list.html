@@ -1,0 +1,15 @@
+{{ define "content" }}
+<section class="page" data-animate>
+  <div class="rulewrap"><span class="num">Index</span><span class="rule"></span><span class="label">Writing</span></div>
+  <h1 class="reveal">Notes from the field.</h1>
+  <div class="posts">
+    {{ range .Pages }}
+    <a class="post reveal" href="{{ .RelPermalink }}">
+      <span class="pn">{{ .Date.Format "2006" }}</span>
+      <h4>{{ .Title }}</h4>
+      <span class="date">{{ .Date.Format "Jan 2" }}</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

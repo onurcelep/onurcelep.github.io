@@ -1,0 +1,314 @@
+// Base Swiss shell styles — shared across every page.
+// Ported from docs/superpowers/prototype-xray-reveal.html (see Task 2 brief,
+// Step 6): body + paper grain, running frame/header, rule/label furniture,
+// generic type + card/post/social patterns, and the shared progress bar.
+//
+// Landing-only rules (#hero, .portrait, .herogrid, #xray, .codewall, etc.)
+// live in _landing.scss (Task 3), not here.
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--grotesk);
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image: radial-gradient(var(--hair) .5px, transparent .5px);
+  background-size: 4px 4px;
+}
+
+main.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+// ---- running frame / header (layouts/_partials/swiss/frame.html) ----
+.frame {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.frame-top {
+  position: absolute;
+  top: 1.4rem;
+  left: 2.2rem;
+  right: 2.2rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.frame .brand {
+  pointer-events: auto;      // re-enable: .frame sets pointer-events:none
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.frame .brand:hover {
+  color: var(--accent);
+}
+
+.frame .frame-nav a {
+  pointer-events: auto;
+  color: var(--ink);
+  text-decoration: none;
+  margin-left: 1.4rem;
+}
+
+.frame .frame-nav a:hover {
+  color: var(--accent);
+}
+
+.frame-nav {
+  display: flex;
+}
+
+.frame-edge {
+  position: absolute;
+  top: 3.4rem;
+  bottom: 2.4rem;
+  width: 1px;
+  background: var(--hair);
+}
+
+.frame-edge.l { left: 2.2rem; }
+.frame-edge.r { right: 2.2rem; }
+
+// ---- section scaffolding ----
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16vh 6rem;
+  position: relative;
+  max-width: 74rem;
+}
+
+.rulewrap {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+.num {
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .1em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rule {
+  height: 2px;
+  background: var(--line);
+  flex: 1;
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+// ---- generic type ----
+h2 {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.02;
+  max-width: 20ch;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  margin-top: 1.5rem;
+  max-width: 52ch;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+// ---- chips ----
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 2.2rem;
+}
+
+.chip {
+  font-family: var(--mono);
+  font-size: .74rem;
+  font-weight: 600;
+  border: 1.5px solid var(--line);
+  padding: .35rem .9rem;
+}
+
+// ---- cards ----
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  margin-top: 3rem;
+  border-top: 2px solid var(--line);
+}
+
+.card {
+  padding: 1.8rem 1.6rem 1.8rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.card .cnum {
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  margin: .6rem 0 .5rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: .92rem;
+  font-weight: 500;
+}
+
+// ---- posts ----
+.posts {
+  margin-top: 3rem;
+  border-top: 2px solid var(--line);
+}
+
+.post {
+  padding: 1.4rem .2rem;
+  border-bottom: 1px solid var(--hair);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.4rem;
+  align-items: baseline;
+  transition: background .2s;
+  color: var(--ink);          // .post is an <a>: don't inherit browser link colors
+  text-decoration: none;
+}
+
+.post:hover {
+  background: var(--paper2);
+}
+
+.post:hover h4 {
+  color: var(--accent);
+}
+
+.post .pn {
+  font-family: var(--mono);
+  font-size: .74rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.post h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.post .date {
+  font-family: var(--mono);
+  font-size: .74rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.morelink {
+  display: inline-block;
+  margin-top: 2.2rem;
+  font-family: var(--mono);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: .2rem;
+}
+
+.morelink:hover {
+  color: var(--accent);
+}
+
+// ---- social ----
+.social {
+  display: flex;
+  gap: .8rem;
+  margin-top: 2.2rem;
+  flex-wrap: wrap;
+}
+
+.social a {
+  font-family: var(--mono);
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  padding: .7rem 1.4rem;
+  transition: .2s;
+}
+
+.social a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+// ---- shared progress bar (all pages) ----
+#prog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 6;
+  background: var(--accent);
+}
+
+// ---- no-JS-safe hide states ----
+// Gated behind .js (set by an inline script in swiss/head.html) so that with
+// JavaScript disabled/blocked, .reveal/.rule/.clip content renders in its
+// final, fully-visible state instead of staying hidden forever.
+.js .reveal { opacity: 0; transform: translateY(18px); }
+.js .rule { transform: scaleX(0); transform-origin: left; }
+.js .clip { clip-path: inset(0 100% 0 0); }
