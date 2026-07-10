@@ -19,9 +19,6 @@
 
 // ---- phone ----
 @media (max-width: 560px) {
-  // swap the wordmark for the "OC" monogram so brand + nav fit one row
-  .brand-lg { display: none; }
-  .brand-sm { display: inline; font-weight: 700; }
   .frame-top { font-size: .62rem; letter-spacing: .06em; }
   .frame .frame-nav a { margin-left: .8rem; }
 
