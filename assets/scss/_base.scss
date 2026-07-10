@@ -104,17 +104,6 @@ main.wrap {
   display: flex;
 }
 
-.frame-edge {
-  position: absolute;
-  top: 3.4rem;
-  bottom: 2.4rem;
-  width: 1px;
-  background: var(--hair);
-}
-
-.frame-edge.l { left: 2.2rem; }
-.frame-edge.r { right: 2.2rem; }
-
 // ---- section scaffolding ----
 section {
   min-height: 100vh;
