@@ -49,6 +49,20 @@ main.wrap {
   pointer-events: none;
 }
 
+// soft paper backdrop at the top so scrolling body text dissolves into the
+// page before it reaches the running header (nav stays legible; #prog at
+// z-index 6 stays above this).
+.frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5.5rem;
+  background: linear-gradient(var(--paper) 45%, rgba(239, 233, 221, 0)); // --paper fading to transparent
+  pointer-events: none;
+}
+
 .frame-top {
   position: absolute;
   top: 1.4rem;
