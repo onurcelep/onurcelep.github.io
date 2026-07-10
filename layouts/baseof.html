@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+  <title>{{ block "title" . }}{{ .Site.Params.HeadTitle | default .Site.Title }}{{ end }}</title>
+  {{ partial "swiss/head.html" . }}
+</head>
+<body class="{{ if .IsHome }}is-home{{ end }}">
+  {{ partial "swiss/frame.html" . }}
+
+  <main class="wrap">
+    {{ block "content" . }}{{ end }}
+  </main>
+
+  {{ if .IsHome }}{{ partial "swiss/xray.html" . }}{{ end }}  {{/* xray partial: Task 3 */}}
+
+  {{ partial "swiss/scripts.html" . }}
+
+  {{ template "_internal/google_analytics.html" . }}
+  {{ if and .Site.Params.umami .Site.Params.umami.siteID }}{{ partial "analytics/umami" . }}{{ end }}
+  {{ partial "body/extensions" . }}
+</body>
+</html>

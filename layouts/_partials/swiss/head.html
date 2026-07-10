@@ -1,0 +1,11 @@
+<script>document.documentElement.classList.add('js')</script>
+{{ partial "head/meta-tags.html" . }}
+{{ partial "head/extensions.html" . }}
+
+{{ $css := resources.Get "scss/swiss.scss" | toCSS (dict "targetPath" "css/swiss.css") }}
+{{ if hugo.IsServer }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ else }}
+  {{ $css = $css | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ end }}
