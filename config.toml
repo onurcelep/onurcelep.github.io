@@ -21,6 +21,7 @@ description = "Onur Celep — Freelance Platform & CI/CD Engineer offering DevOp
 keywords = "DevOps consultant, CI/CD engineer, freelance DevOps, test automation, infrastructure as code, platform engineering, Kubernetes, AWS, Jenkins, GitHub Actions, Berlin, Germany"
 info = ["Platform & CI/CD Engineering", "Consultant"]
 avatarURL = "images/avatar.jpg"
+faviconSVG = "/favicon.svg"
 #gravatar = "onurcelep@gmail.com"
 dateFormat = "January 2, 2006"
 #since = 2019
