@@ -1,6 +1,0 @@
-{{ $gsap := resources.Get "js/vendor/gsap.min.js" }}
-{{ $st   := resources.Get "js/vendor/ScrollTrigger.min.js" }}
-{{ $site := resources.Get "js/site.js" }}
-{{ $bundle := slice $gsap $st $site | resources.Concat "js/site.bundle.js" }}
-{{ if not hugo.IsServer }}{{ $bundle = $bundle | minify | fingerprint }}{{ end }}
-<script src="{{ $bundle.RelPermalink }}" defer></script>
