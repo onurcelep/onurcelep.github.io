@@ -87,6 +87,8 @@ main.wrap {
   color: var(--accent);
 }
 
+.brand-sm { display: none; }   // "OC" monogram — shown only on mobile (see _responsive)
+
 .frame .frame-nav a {
   pointer-events: auto;
   color: var(--ink);
@@ -101,17 +103,6 @@ main.wrap {
 .frame-nav {
   display: flex;
 }
-
-.frame-edge {
-  position: absolute;
-  top: 3.4rem;
-  bottom: 2.4rem;
-  width: 1px;
-  background: var(--hair);
-}
-
-.frame-edge.l { left: 2.2rem; }
-.frame-edge.r { right: 2.2rem; }
 
 // ---- section scaffolding ----
 section {
