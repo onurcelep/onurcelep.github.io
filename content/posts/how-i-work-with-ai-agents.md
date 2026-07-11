@@ -131,6 +131,12 @@ local customization. So it got the same treatment, as a public repo:
   finds stale repos by their stamp and files each one an update task —
   addressed to that repo's own CI agent, which prepares the PR. I keep
   the merge button; the toil is gone.
+- **The standard audits itself weekly.** A scheduled agent researches
+  what changed upstream — the action's inputs, the model lineup, new
+  platform capabilities — and opens one small, referenced PR when the
+  templates have fallen behind. Ideas that would restructure the
+  factory never ship as code; they're filed as proposals for me to
+  judge. The setup stays current without me watching release notes.
 - **A validation suite guards the whole thing**, and the repo dogfoods
   its own templates, so the standard can't silently drift from what it
   stamps.
