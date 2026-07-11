@@ -7,6 +7,9 @@ tags = ["DevOps", "CI/CD", "test automation", "infrastructure as code", "consult
 
 10+ years of engineering experience across Mercedes-Benz, Intel, and Ericsson. Available for consulting, architecture review, and hands-on implementation.
 
+__{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
+: _DevOps transformation, team structure, KPI definition, and ways of working. Previously led 3 engineering teams at Mercedes-Benz._
+
 __{{< svg "fas fa-sitemap" >}}&emsp;CI/CD Architecture & Implementation__
 : _End-to-end pipeline design and delivery. Proven at scale with 200+ engineer organizations._
 
@@ -24,6 +27,3 @@ __{{< svg "fas fa-robot" >}}&emsp;Platform Engineering & Developer Tooling__
 
 __{{< svg "fas fa-gauge-high" >}}&emsp;Performance Testing & Analysis__
 : _Load testing, bottleneck identification, root cause analysis, and actionable optimization recommendations._
-
-__{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
-: _DevOps transformation, team structure, KPI definition, and ways of working. Previously led 3 engineering teams at Mercedes-Benz._
