@@ -89,10 +89,10 @@ CLAUDE_CODE_OAUTH_TOKEN='<new token>' claude -p "say ok"
 ```
 
 **passes with any garbage value**, because the CLI silently prefers the
-credentials in your OS keychain over the environment variable. My client
-caught this before I did: a verification step that cannot fail is worse
-than none, because it launders confidence. Credentials for CI get
-verified *in CI*, full stop.
+credentials in your OS keychain over the environment variable. I only
+noticed when a deliberately wrong token also printed "ok". A verification
+step that cannot fail is worse than none, because it launders confidence.
+Credentials for CI get verified *in CI*, full stop.
 
 ## Layer 2: the cap that killed a healthy run
 
