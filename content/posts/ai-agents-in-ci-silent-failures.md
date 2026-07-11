@@ -13,7 +13,9 @@ the repo, makes the change on a branch, and hands me a pull request. A
 second agent reviews every PR automatically before I look at it. A human
 merges everything. The setup is stamped from a single template repo
 ([ai-factory](https://github.com/onurcelep/ai-factory)) so all my projects
-run the same configuration.
+run the same configuration — the full tour of that setup and how it came
+to be is [its own post]({{< relref "how-i-work-with-ai-agents" >}}); this
+one is about the day it broke.
 
 One morning I filed a small, well-specified task and got back a comment:
 *"I'll analyze this and get back to you."* Then nothing. The workflow run:
