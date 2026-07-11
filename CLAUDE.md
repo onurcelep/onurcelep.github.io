@@ -17,11 +17,22 @@ Hugo-based personal portfolio and CV site using the hugo-coder theme, deployed t
 
 ## Design
 
-Stock hugo-coder theme, no template overrides beyond what predates the 2026-07
-Swiss redesign (reverted 2026-07-11, see
-`docs/superpowers/specs/2026-07-11-revert-to-hugo-coder-design.md`):
+Stock hugo-coder theme (2026-07 Swiss redesign reverted 2026-07-11, see
+`docs/superpowers/specs/2026-07-11-revert-to-hugo-coder-design.md`), plus a
+small custom layer, all in `assets/css/test.css` + `layouts/home.html`:
 
 - Light/dark toggle: theme default (`colorScheme = "auto"`).
+- Swiss paper background (light mode only): cream `#efe9dd` + dot grain; code
+  blocks tinted `#e7e0d1`. Every light-scoped rule exists twice — once for
+  `body.colorscheme-light`, once for `body.colorscheme-auto` under
+  `@media (prefers-color-scheme: light)` — because the server ships
+  `colorscheme-auto` and the theme's JS swaps the class after first paint
+  (single-scoped rules cause a white flash on load). Keep the pairs in sync.
+- Scrollable snap homepage (`layouts/home.html`): hero + Services + Contact
+  sections, each snapping to a full screen (`scroll-snap`, homepage-scoped via
+  `html:has(.home-scroll)`); section content pulled from `services.md` /
+  `contact.md` with `.GetPage` — those files stay the single content source.
+  Services is intentionally absent from the top menu; `/services/` stays live.
 - Code blocks: CSS-class syntax highlighting (`[markup.highlight] noClasses = false`)
   so the theme's light/dark chroma stylesheets apply.
 - Blog diagrams: `{{< diagram >}}` shortcode (`layouts/shortcodes/diagram.html`)

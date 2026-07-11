@@ -135,9 +135,16 @@ body.colorscheme-dark .dg{
   .dg-aside{ max-width:46rem; }
 }
 /* =========================================================================
-   Swiss paper background (kept from the 2026-07 redesign) — light mode only.
-   Warm cream paper + faint ink dot-grain, scoped to the theme's light
-   colorscheme class so dark mode stays stock.
+   Swiss paper (kept from the 2026-07 redesign) — light mode only.
+   Warm cream paper + faint ink dot-grain; code surfaces folded into the
+   palette (secondary paper for blocks, faint ink wash for inline code).
+   Dark mode stays stock.
+
+   The server ships <body class="colorscheme-auto"> and the theme's JS only
+   swaps it to colorscheme-light after load, so every rule must ALSO match
+   the auto class under a light-preference media query — otherwise the first
+   paint is white and the paper pops in (FOUC). The two blocks below are
+   intentionally identical; keep them in sync.
    ========================================================================= */
 body.colorscheme-light{ background:#efe9dd; }
 body.colorscheme-light::before{
@@ -149,3 +156,101 @@ body.colorscheme-light::before{
 body.colorscheme-light .content,
 body.colorscheme-light .navigation,
 body.colorscheme-light footer{ position:relative; z-index:1; }
+body.colorscheme-light .highlight,
+body.colorscheme-light .highlight pre,
+body.colorscheme-light .chroma,
+body.colorscheme-light .chroma .bg{ background:#e7e0d1; }
+body.colorscheme-light :not(pre) > code{ background:rgba(26,26,26,.08); }
+
+@media (prefers-color-scheme: light){
+  body.colorscheme-auto{ background:#efe9dd; }
+  body.colorscheme-auto::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:.5;
+    background-image:radial-gradient(rgba(26,26,26,.18) .5px, transparent .5px);
+    background-size:4px 4px;
+  }
+  body.colorscheme-auto .content,
+  body.colorscheme-auto .navigation,
+  body.colorscheme-auto footer{ position:relative; z-index:1; }
+  body.colorscheme-auto .highlight,
+  body.colorscheme-auto .highlight pre,
+  body.colorscheme-auto .chroma,
+  body.colorscheme-auto .chroma .bg{ background:#e7e0d1; }
+  body.colorscheme-auto :not(pre) > code{ background:rgba(26,26,26,.08); }
+}
+
+/* =========================================================================
+   Scrollable homepage — hero fills the first viewport, then Services and
+   Contact sections (content pulled from their markdown pages). Root font
+   size is 62.5% (1rem = 10px), matching the theme.
+   ========================================================================= */
+.home-scroll{ width:100%; }
+/* Hero bottom sits exactly at the fold: 100vh minus the theme's fixed
+   pieces above the content (nav 6rem + .content margin-top 1.6rem, or
+   1rem on mobile). svh variant corrects for mobile browser chrome. */
+.home-hero{
+  min-height: calc(100vh - 7.6rem);
+  min-height: calc(100svh - 7.6rem);
+}
+@media only screen and (max-width: 768px){
+  .home-hero{
+    min-height: calc(100vh - 7rem);
+    min-height: calc(100svh - 7rem);
+  }
+}
+.scroll-hint{
+  display:inline-block; margin-top:3rem;
+  font-size:1.3rem; letter-spacing:.12em; text-transform:uppercase;
+}
+.scroll-hint .arr{ display:inline-block; }
+.section-hint{ text-align:center; margin-top:4rem; }
+@media (prefers-reduced-motion: no-preference){
+  html{ scroll-behavior:smooth; }
+  .scroll-hint .arr{ animation: hint-bob 2.4s ease-in-out infinite; }
+  @keyframes hint-bob{
+    0%, 100%{ transform: translateY(0); }
+    50%     { transform: translateY(.5rem); }
+  }
+}
+.home-section{
+  max-width:72rem; padding-top:5rem; padding-bottom:3rem;
+  border-top:1px solid rgba(26,26,26,.14);
+}
+.home-section h2{ margin-top:0; }
+
+/* Snap scrolling (homepage only, via :has): the page skips section by
+   section — hero, services, contact — instead of resting on partial views.
+   scroll-padding-top mirrors the fixed pieces above the content (nav 6rem +
+   content margin 1.6rem / 1rem mobile), so the hero's load position IS its
+   snap position (no jump on load) and every section gets the same top gap
+   and fill height as the initial hero view. Sections taller than one screen
+   still scroll freely inside their snap area. */
+html:has(.home-scroll){
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 7.6rem;
+}
+.home-hero, .home-section{
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  /* .container's own 1rem top margin would drift every snap position off
+     its load position by 10px — flatten it inside the snap flow. */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.home-section{
+  min-height: calc(100vh - 7.6rem);
+  min-height: calc(100svh - 7.6rem);
+}
+html:has(.home-scroll) footer{ scroll-snap-align: end; }
+@media only screen and (max-width: 768px){
+  html:has(.home-scroll){ scroll-padding-top: 7rem; }
+  .home-section{
+    min-height: calc(100vh - 7rem);
+    min-height: calc(100svh - 7rem);
+  }
+}
+body.colorscheme-dark .home-section{ border-top-color:rgba(255,255,255,.14); }
+@media (prefers-color-scheme: dark){
+  body.colorscheme-auto .home-section{ border-top-color:rgba(255,255,255,.14); }
+}
