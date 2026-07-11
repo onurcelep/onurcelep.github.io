@@ -15,20 +15,27 @@ Hugo-based personal portfolio and CV site using the hugo-coder theme, deployed t
 - **Dev server:** `hugo server -D`
 - **Deploy:** Push to `main` branch — GitHub Actions (`.github/workflows/gh-pages.yml`) handles deployment to GitHub Pages
 
-## Design System (Swiss/print redesign)
+## Design
 
-- Single **paper (light)** theme; the hugo-coder light/dark toggle is removed
-  (`colorScheme="light"`, `hideColorSchemeToggle=true`, `disableDefaultJsScripts=true`).
-- Style entry: `assets/scss/swiss.scss` → imports `_tokens` (palette + fonts),
-  `_base`, `_landing`, `_pages`, `_diagram`. Compiled via Hugo Pipes.
-- Template overrides in `layouts/` (theme submodule untouched):
-  `baseof.html`, `index.html` (landing), `single.html`, `list.html`,
-  `posts/single.html`, `posts/list.html`, and `_partials/swiss/*`
-  (`head`, `frame`, `scripts`, `xray`).
-- Motion: `assets/js/site.js` — shared scroll reveals on every page (elements
-  marked `.reveal` inside `[data-animate]` sections, with `.rule` draw-ins and
-  `#prog` progress bar). GSAP is vendored at `assets/js/vendor/`.
-- Landing-only **x-ray reveal**: a one-time CSS-mask scan surfaces a hidden code
-  layer. Edit the revealed code in `data/substrate.yaml` (only place it's defined);
-  it is `aria-hidden` and non-indexed.
-- All motion is gated by `prefers-reduced-motion`; content works without JS.
+Stock hugo-coder theme (2026-07 Swiss redesign reverted 2026-07-11, see
+`docs/superpowers/specs/2026-07-11-revert-to-hugo-coder-design.md`), plus a
+small custom layer, all in `assets/css/test.css` + `layouts/home.html`:
+
+- Light/dark toggle: theme default (`colorScheme = "auto"`).
+- Swiss paper background (light mode only): cream `#efe9dd` + dot grain; code
+  blocks tinted `#e7e0d1`. Every light-scoped rule exists twice — once for
+  `body.colorscheme-light`, once for `body.colorscheme-auto` under
+  `@media (prefers-color-scheme: light)` — because the server ships
+  `colorscheme-auto` and the theme's JS swaps the class after first paint
+  (single-scoped rules cause a white flash on load). Keep the pairs in sync.
+- Scrollable snap homepage (`layouts/home.html`): hero + Services + Contact
+  sections, each snapping to a full screen (`scroll-snap`, homepage-scoped via
+  `html:has(.home-scroll)`); section content pulled from `services.md` /
+  `contact.md` with `.GetPage` — those files stay the single content source.
+  Services is intentionally absent from the top menu; `/services/` stays live.
+- Code blocks: CSS-class syntax highlighting (`[markup.highlight] noClasses = false`)
+  so the theme's light/dark chroma stylesheets apply.
+- Blog diagrams: `{{< diagram >}}` shortcode (`layouts/shortcodes/diagram.html`)
+  styled by `assets/css/test.css` (theme-aware via the theme's `colorscheme`
+  mechanism), loaded through `customCSS` in config.toml.
+- Favicon: `static/favicon.svg`, wired via the theme's `faviconSVG` param.

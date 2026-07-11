@@ -1,0 +1,34 @@
+{{ define "content" }}
+  {{/* The theme's .content wrapper is display:flex (row); everything lives
+       inside this single full-width child so sections stack vertically. */}}
+  <div class="home-scroll">
+    <section class="container centered home-hero">
+      <div class="about">
+        {{ partialCached "home/avatar.html" . }}
+
+        {{ partialCached "home/author.html" . }}
+
+        {{ partialCached "home/social.html" . }}
+
+        <a class="scroll-hint" href="#services">services <span class="arr">&darr;</span></a>
+      </div>
+
+      {{ partialCached "home/extensions.html" . }}
+    </section>
+
+    {{ with .Site.GetPage "/services" }}
+      <section id="services" class="container home-section">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ .Content }}
+        <p class="section-hint"><a class="scroll-hint" href="#contact">contact <span class="arr">&darr;</span></a></p>
+      </section>
+    {{ end }}
+
+    {{ with .Site.GetPage "/contact" }}
+      <section id="contact" class="container home-section">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ .Content }}
+      </section>
+    {{ end }}
+  </div>
+{{ end }}
