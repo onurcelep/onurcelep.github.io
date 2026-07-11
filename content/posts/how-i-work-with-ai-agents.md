@@ -1,6 +1,6 @@
 +++
 title = "One AI setup for every repo: how I work with coding agents, and why it became a factory"
-date = 2026-07-11
+date = 2026-07-08
 description = "The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory — and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."
 keywords = ["ai development workflow", "claude code setup", "ai coding agents", "claude github action", "ai pair programming workflow", "platform engineering ai", "llm development setup", "repo memory agents"]
 tags = ["ai", "platform-engineering", "developer-tooling", "workflow"]
