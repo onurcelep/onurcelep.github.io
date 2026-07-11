@@ -134,3 +134,18 @@ body.colorscheme-dark .dg{
   }
   .dg-aside{ max-width:46rem; }
 }
+/* =========================================================================
+   Swiss paper background (kept from the 2026-07 redesign) — light mode only.
+   Warm cream paper + faint ink dot-grain, scoped to the theme's light
+   colorscheme class so dark mode stays stock.
+   ========================================================================= */
+body.colorscheme-light{ background:#efe9dd; }
+body.colorscheme-light::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.5;
+  background-image:radial-gradient(rgba(26,26,26,.18) .5px, transparent .5px);
+  background-size:4px 4px;
+}
+body.colorscheme-light .content,
+body.colorscheme-light .navigation,
+body.colorscheme-light footer{ position:relative; z-index:1; }
