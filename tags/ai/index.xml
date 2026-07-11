@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai on Onur Celep</title><link>https://onurcelep.github.io/tags/ai/</link><description>Recent content in Ai on Onur Celep</description><generator>Hugo</generator><language>en-US</language><lastBuildDate>Sat, 11 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://onurcelep.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>One AI setup for every repo: how I work with coding agents, and why it became a factory</title><link>https://onurcelep.github.io/posts/how-i-work-with-ai-agents/</link><pubDate>Sat, 11 Jul 2026 00:00:00 +0000</pubDate><guid>https://onurcelep.github.io/posts/how-i-work-with-ai-agents/</guid><description>&lt;p&gt;I write software with AI agents in three places: a terminal session while
+I work, cloud sessions I fire off and forget, and agents that live in my
+repos&amp;rsquo; CI. All three follow the same committed rules, read the same
+committed memory, and hand everything to me as a pull request that I
+merge. This post is a tour of that setup — what each piece is for, what
+actually changed in how I work, and why keeping it consistent across
+repositories eventually forced me to build a small platform for it
+(&lt;a href="https://github.com/onurcelep/ai-factory" class="external-link" target="_blank" rel="noopener"&gt;ai-factory&lt;/a&gt;).&lt;/p&gt;</description></item><item><title>The green check that did nothing: a postmortem of AI agents in CI</title><link>https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/</link><pubDate>Sat, 11 Jul 2026 00:00:00 +0000</pubDate><guid>https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/</guid><description>&lt;p&gt;I run AI coding agents in CI across my repositories. The loop looks like
+this: I open a GitHub issue describing a change and tag the agent; it reads
+the repo, makes the change on a branch, and hands me a pull request. A
+second agent reviews every PR automatically before I look at it. A human
+merges everything. The setup is stamped from a single template repo
+(&lt;a href="https://github.com/onurcelep/ai-factory" class="external-link" target="_blank" rel="noopener"&gt;ai-factory&lt;/a&gt;) so all my projects
+run the same configuration — the full tour of that setup and how it came
+to be is &lt;a href="https://onurcelep.github.io/posts/how-i-work-with-ai-agents/" &gt;its own post&lt;/a&gt;; this
+one is about the day it broke.&lt;/p&gt;</description></item></channel></rss>

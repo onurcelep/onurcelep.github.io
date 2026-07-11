@@ -1,0 +1,148 @@
+<!doctype html><html lang=en><head><title>The green check that did nothing: a postmortem of AI agents in CI · Onur Celep</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Onur Celep"><meta name=description content="My AI code reviewer reported success for a day while doing no work at all. A four-layer postmortem: what failed, what I misdiagnosed, and the platform guardrails that make the whole class of failure impossible to miss again."><meta name=keywords content="ai agents ci,claude code github action,ai code review pipeline,llm agents devops,ci postmortem,silent failure,ai platform engineering,github actions ai"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://onurcelep.github.io/images/og-default.png"><meta name=twitter:title content="The green check that did nothing: a postmortem of AI agents in CI"><meta name=twitter:description content="My AI code reviewer reported success for a day while doing no work at all. A four-layer postmortem: what failed, what I misdiagnosed, and the platform guardrails that make the whole class of failure impossible to miss again."><meta property="og:url" content="https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/"><meta property="og:site_name" content="Onur Celep"><meta property="og:title" content="The green check that did nothing: a postmortem of AI agents in CI"><meta property="og:description" content="My AI code reviewer reported success for a day while doing no work at all. A four-layer postmortem: what failed, what I misdiagnosed, and the platform guardrails that make the whole class of failure impossible to miss again."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-07-11T00:00:00+00:00"><meta property="article:modified_time" content="2026-07-11T00:00:00+00:00"><meta property="article:tag" content="Ai"><meta property="article:tag" content="Ci-Cd"><meta property="article:tag" content="Platform-Engineering"><meta property="article:tag" content="Postmortem"><meta property="article:tag" content="Github-Actions"><meta property="og:image" content="https://onurcelep.github.io/images/og-default.png"><link rel=canonical href=https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/><link rel=preload href=/fonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.4b392a85107b91dbdabc528edf014a6ab1a30cd44cafcd5325c8efe796794fca.css integrity="sha256-SzkqhRB7kdvavFKO3wFKarGjDNRMr81TJcjv55Z5T8o=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.ad48f476275974885bdc03d5251e3cdbe1678c54a63ff772376b0ed2adc468dd.css integrity="sha256-rUj0didZdIhb3APVJR482+FnjFSmP/dyN2sO0q3EaN0=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/test.min.636e467c540d2151fe5a0453c6ad51a6b323ce296f6d79c7416645f607cf8631.css integrity="sha256-Y25GfFQNIVH+WgRTxq1RprMjzilvbXnHQWZF9gfPhjE=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/favicon.svg sizes=any><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5><meta name=google-site-verification content="wWOX-rw7PzNRkxfrWuu3JGuuCruPCcDUSM1nVGK55hY"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="The green check that did nothing: a postmortem of AI agents in CI"><meta name=twitter:image:alt content="The green check that did nothing: a postmortem of AI agents in CI"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"\"https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/\""},"headline":"\"The green check that did nothing: a postmortem of AI agents in CI\"","description":"\"My AI code reviewer reported success for a day while doing no work at all. A four-layer postmortem: what failed, what I misdiagnosed, and the platform guardrails that make the whole class of failure impossible to miss again.\"","image":"\"https://onurcelep.github.io/images/og-default.png\"","datePublished":"\"2026-07-11T00:00:00Z\"","dateModified":"\"2026-07-11T00:00:00Z\"","author":{"@type":"Person","name":"\"Onur Celep\"","url":"\"https://onurcelep.github.io/\""},"publisher":{"@type":"Person","name":"\"Onur Celep\""}}</script></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://onurcelep.github.io/>Onur Celep
+</a><input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fa-solid fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/contact/>Contact</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=https://onurcelep.github.io/posts/ai-agents-in-ci-silent-failures/>The green check that did nothing: a postmortem of AI agents in CI</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa-solid fa-calendar" aria-hidden=true></i>
+<time datetime=2026-07-11T00:00:00Z>July 11, 2026
+</time></span><span class=reading-time><i class="fa-solid fa-clock" aria-hidden=true></i>
+8-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
+<span class=tag><a href=/tags/ai/>Ai</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/ci-cd/>Ci-Cd</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/platform-engineering/>Platform-Engineering</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/postmortem/>Postmortem</a>
+</span><span class=separator>•</span>
+<span class=tag><a href=/tags/github-actions/>Github-Actions</a></span></div></div></header><div class=post-content><p>I run AI coding agents in CI across my repositories. The loop looks like
+this: I open a GitHub issue describing a change and tag the agent; it reads
+the repo, makes the change on a branch, and hands me a pull request. A
+second agent reviews every PR automatically before I look at it. A human
+merges everything. The setup is stamped from a single template repo
+(<a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a>) so all my projects
+run the same configuration — the full tour of that setup and how it came
+to be is <a href=/posts/how-i-work-with-ai-agents/>its own post</a>; this
+one is about the day it broke.</p><p>One morning I filed a small, well-specified task and got back a comment:
+<em>&ldquo;I&rsquo;ll analyze this and get back to you.&rdquo;</em> Then nothing. The workflow run:
+green. The PR review check on another repo: also green, with no review
+posted. Everything reported success, and nothing had done any work.</p><p>This is a postmortem of that day. It turned out to be <strong>four independent
+failures stacked behind one symptom</strong>, and I misdiagnosed the first one
+publicly before getting it right. I&rsquo;m writing it up because every team
+adopting AI agents in CI will eventually meet some version of this, and
+the fixes generalize: they&rsquo;re platform engineering, not prompt
+engineering.</p><h2 id=the-symptom-success-theater>The symptom: success theater
+<a class=heading-link href=#the-symptom-success-theater><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>The failing runs shared one signature, visible in the run log&rsquo;s result
+JSON:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;type&#34;</span><span class=p>:</span> <span class=s2>&#34;result&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;subtype&#34;</span><span class=p>:</span> <span class=s2>&#34;success&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;is_error&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;duration_ms&#34;</span><span class=p>:</span> <span class=mi>2186</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;num_turns&#34;</span><span class=p>:</span> <span class=mi>1</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;total_cost_usd&#34;</span><span class=p>:</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>Read that carefully: <code>subtype: "success"</code>, <code>is_error: true</code>, one turn, two
+seconds, zero dollars. The agent died on its very first model call — and
+the GitHub check still rendered <strong>green</strong>. A required &ldquo;AI review&rdquo; gate
+that is green regardless of whether the review ran is worse than no gate:
+it&rsquo;s a false positive you&rsquo;ve wired into your merge process.</p><p>That&rsquo;s lesson zero, and it applies to any agent-in-CI product you use:
+<strong>never let the check color be your health signal.</strong> The honest signals
+are the run&rsquo;s turn count and cost, and the presence of the artifact you
+expected — a pushed branch, a posted review. A one-turn zero-cost run did
+nothing, whatever the dashboard says.</p><h2 id=layer-1-a-dead-credential-and-a-detour-i-earned>Layer 1: a dead credential, and a detour I earned
+<a class=heading-link href=#layer-1-a-dead-credential-and-a-detour-i-earned><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>The real error text was hidden by default (the action suppresses model
+output in logs &ldquo;for security&rdquo;). So I did what people do with partial
+information: I found a correlation. The action&rsquo;s floating version tag had
+moved overnight; the last good run used the old build, every bad run used
+the new one. Case closed — I pinned the old version across three repos and
+wrote up the &ldquo;regression&rdquo;.</p><p>The pinned build failed identically two minutes later.</p><p>The correlation was real; the inference was garbage. There had been <strong>no
+runs at all in the 22-hour window</strong> between last-good and first-bad, so
+<em>every</em> variable that changed in that window was an equally valid suspect.
+A bisection is only evidence when the timeline is dense. What had actually
+changed, silently, in the same window: the repo&rsquo;s OAuth token had gone
+bad.</p><p>What finally cut through was not archaeology but a <strong>discriminating
+experiment</strong>: the same credential was configured in a sibling repo, so I
+filed a trivial &ldquo;reply pong&rdquo; issue there. It answered in eight seconds.
+Same token value, same workflow config, different repo — that one run
+isolated the failure to the repo, and after a proper rotation, to the
+token itself. Ten minutes of controlled experiment beat two hours of log
+reading, and it would have beaten them harder if I&rsquo;d run it <em>first</em>.</p><p>One trap worth naming, because it will bite anyone verifying credentials
+for a CLI-based agent: the obvious local check</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>CLAUDE_CODE_OAUTH_TOKEN</span><span class=o>=</span><span class=s1>&#39;&lt;new token&gt;&#39;</span> claude -p <span class=s2>&#34;say ok&#34;</span>
+</span></span></code></pre></div><p><strong>passes with any garbage value</strong>, because the CLI silently prefers the
+credentials in your OS keychain over the environment variable. I only
+noticed when a deliberately wrong token also printed &ldquo;ok&rdquo;. A verification
+step that cannot fail is worse than none, because it launders confidence.
+Credentials for CI get verified <em>in CI</em>, full stop.</p><h2 id=layer-2-the-cap-that-killed-a-healthy-run>Layer 2: the cap that killed a healthy run
+<a class=heading-link href=#layer-2-the-cap-that-killed-a-healthy-run><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>With a working token and the log output finally surfaced (one merged line
+of config: <code>show_full_output: true</code>), the next run failed honestly:
+<code>error_max_turns</code>. The agent had been given a budget of 10 reasoning
+turns; a realistic implement-and-open-a-PR task needs 15–25. It had done
+the work — read the files, made correct edits — and hit the ceiling
+before it could push.</p><p>Turn caps are the right idea (they&rsquo;re a circuit breaker against runaway
+runs), but a cap below the task&rsquo;s natural cost converts every real task
+into a guaranteed failure. Worse, in my case the too-small number lived in
+the <em>template</em> that stamps every repo, so the failure was fleet-wide by
+construction. Budget circuit breakers for roughly twice a realistic heavy
+run, not for the demo task you tested with.</p><h2 id=layer-3-the-assumption-nobody-had-ever-tested>Layer 3: the assumption nobody had ever tested
+<a class=heading-link href=#layer-3-the-assumption-nobody-had-ever-tested><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Next honest failure: the agent finished its work and died at <code>git push</code>
+with a 403. This one had been latent since day one. The GitHub App that
+powers the agent posts <em>comments</em> with its own token, but pushes branches
+with the <strong>workflow&rsquo;s token</strong> — and my stamped workflows granted that
+token read-only contents. Result: every &ldquo;the agent will open a PR for
+you&rdquo; promise in my own documentation had never once been true. All the
+agent-authored branches in my history had come from a different execution
+path (cloud sessions running under my account), which made the broken
+path look proven when it had simply never run.</p><p>The lesson isn&rsquo;t about GitHub token plumbing, it&rsquo;s this: <strong>an advertised
+capability that has never been exercised end to end is not a capability;
+it&rsquo;s a hypothesis.</strong> The fix is one boring sentence in my setup checklist
+now: after wiring any agent pipeline, run one full loop — issue, agent,
+branch, PR, review — before declaring it operational. That single smoke
+test, run on installation day, would have surfaced layers two and three
+immediately and the token issue the first time it recurred.</p><h2 id=layer-4-the-guarantee-that-was-an-accident>Layer 4: the guarantee that was an accident
+<a class=heading-link href=#layer-4-the-guarantee-that-was-an-accident><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>Fixing layer 3 meant granting the workflows write permissions, and that
+exposed a design smell: my &ldquo;the agent can never push to <code>main</code>&rdquo; guarantee
+had been enforced <em>by the same broken permission</em> that prevented it from
+pushing anywhere at all. Fix the bug, lose the guarantee.</p><p>Safety properties that fall out of a misconfiguration disappear when the
+misconfiguration is fixed. If the property matters, enforce it on
+purpose: <code>main</code> now has a branch ruleset requiring a pull request for
+everything, with the agent holding no bypass. The agent physically cannot
+touch <code>main</code>; I merely review and merge. The guarantee survived the fix
+only because it stopped being an accident.</p><h2 id=what-i-institutionalized>What I institutionalized
+<a class=heading-link href=#what-i-institutionalized><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>A postmortem that ends in a document nobody reads is a ritual. Every
+lesson above now lives somewhere that <em>triggers</em>:</p><ul><li><strong>A playbook in the agents&rsquo; own context.</strong> The diagnosis order (surface
+the error, suspect credentials first, run a cross-repo discriminator,
+distrust gap-correlations), the health signals, and the smoke-test
+procedure ship as a skill that loads into every agent session — local
+and CI — across all repos. The agent that debugs the next incident
+starts with this one&rsquo;s conclusions.</li><li><strong>Seeded repo memory.</strong> Each repo carries a short fact file describing
+the silent-failure signature and what to do, indexed where agents look
+before nontrivial work. New repos are born with it.</li><li><strong>A mandatory smoke test in the setup procedure.</strong> &ldquo;A pipeline that has
+never completed one loop is not set up&rdquo; is now a checklist item, not a
+war story.</li><li><strong>Version-stamped configuration with automatic propagation.</strong> Every
+stamped repo carries a machine-readable version marker; when the
+standard changes, a workflow finds stale repos and files each one an
+update task — addressed to the agent, which prepares the PR. Humans
+keep the merge button and lose the toil.</li></ul><p>The epilogue makes the point better than I can: the <em>first</em> automated
+review to run on the propagation workflow itself caught a real bug in my
+shell — a <code>set -e</code> pipeline that would have aborted the fleet update on
+exactly the repos that needed it most. The pipeline I had spent the day
+repairing paid for the repair before the day ended.</p><h2 id=if-youre-adopting-ai-agents-in-ci>If you&rsquo;re adopting AI agents in CI
+<a class=heading-link href=#if-youre-adopting-ai-agents-in-ci><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
+<span class=sr-only>Link to heading</span></a></h2><p>The compressed version, from one incident but I&rsquo;d bet on its generality:</p><ol><li><strong>Define agent health as artifacts, not check colors.</strong> Turn count,
+cost, and &ldquo;did the PR/review actually appear&rdquo; are the signals. Alert
+on their absence.</li><li><strong>Make hidden errors visible before you fix anything</strong>, and prefer one
+discriminating experiment over any amount of correlation.</li><li><strong>Verify credentials where they&rsquo;re used.</strong> A local check that can&rsquo;t
+fail is negative information.</li><li><strong>Smoke-test the full loop on installation day</strong>, and again after any
+change to tokens, permissions, or caps.</li><li><strong>Enforce safety properties explicitly.</strong> If an agent must not touch
+<code>main</code>, write that as branch protection, not as a side effect of some
+other setting.</li><li><strong>Put the lessons where they load</strong>, not where they&rsquo;re filed. Agents
+can carry their own operational playbooks; use that.</li></ol><p>None of this is AI magic. It&rsquo;s the same discipline platform teams have
+always applied to CI — applied to a new kind of unreliable, very
+productive worker. The setup that came out the other side is public and
+forkable: <a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a>, one
+command to stamp a repo, one merged PR at a time after that.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
+2026
+Onur Celep</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script><script async defer data-website-id=f34eee1c-8d81-47bd-b5e1-c63d3fd71e64 src=https://cloud.umami.is/script.js></script></body></html>
