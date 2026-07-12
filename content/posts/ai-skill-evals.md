@@ -4,7 +4,7 @@ date = 2026-07-12
 description = "My agents' rules ship as prose instructions, and prose regresses silently. So I built a three-tier eval suite for them — and on day one it caught two routing bugs and an agent violating a rule that was sitting in its context."
 keywords = ["ai agent evals", "claude code skills", "llm agent testing", "skill evaluation", "ai platform engineering", "agent reliability", "prompt regression testing", "model migration llm"]
 tags = ["ai", "platform-engineering", "testing", "developer-tooling"]
-draft = true
+draft = false
 +++
 
 My AI setup runs on rules. Release discipline, model routing, incident
