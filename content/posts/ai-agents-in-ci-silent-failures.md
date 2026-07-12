@@ -199,3 +199,8 @@ always applied to CI — applied to a new kind of unreliable, very
 productive worker. The setup that came out the other side is public and
 forkable: [ai-factory](https://github.com/onurcelep/ai-factory), one
 command to stamp a repo, one merged PR at a time after that.
+
+*Follow-up: this failure class turned out to exist one layer up too — the
+rules the agents run on can regress just as silently as the pipelines
+that run them. Part three: [The rule my agent broke while reading
+it]({{< relref "ai-skill-evals" >}}).*
