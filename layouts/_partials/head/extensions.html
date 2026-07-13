@@ -6,6 +6,19 @@
 */}}
 <meta name="google-site-verification" content="wWOX-rw7PzNRkxfrWuu3JGuuCruPCcDUSM1nVGK55hY">
 
+{{- /* Advertise the posts feed on pages the theme's alternative-output-formats
+       partial doesn't cover (single pages like blog posts have no
+       AlternativeOutputFormats), so readers can subscribe from the article
+       itself, not only from the site root. List/home pages already emit their
+       own feed link, so skip those to avoid a duplicate. */ -}}
+{{- if not .AlternativeOutputFormats -}}
+  {{- with .Site.GetPage "/posts" -}}
+    {{- with .OutputFormats.Get "rss" -}}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="Posts on {{ $.Site.Title }}" />
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
 {{- /* Keep thin, duplicate taxonomy pages (tags, etc.) out of the index,
        but let crawlers follow their links to the real posts. */ -}}
 {{- if in (slice "term" "taxonomy") .Kind -}}

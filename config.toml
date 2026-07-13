@@ -119,6 +119,13 @@ icon = "fa fa-2x fa-linkedin"
 weight = 4
 url = "https://www.linkedin.com/in/onurcelep/"
 
+[[params.social]]
+name = "RSS"
+icon = "fa fa-2x fa-rss"
+weight = 5
+url = "/posts/index.xml"
+type = "application/rss+xml"
+
 [languages.en]
 locale = "en-US"
 label = ":uk:"
