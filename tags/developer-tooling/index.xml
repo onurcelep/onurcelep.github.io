@@ -11,7 +11,7 @@ and what happened when I pointed tests at it.&lt;/p&gt;</description></item><ite
 I work, cloud sessions I fire off and forget, and agents that live in my
 repos&amp;rsquo; CI. All three follow the same committed rules, read the same
 committed memory, and hand everything to me as a pull request that I
-merge. This post is a tour of that setup — what each piece is for, what
+merge. This post is a tour of that setup: what each piece is for, what
 actually changed in how I work, and why keeping it consistent across
 repositories eventually forced me to build a small platform for it
 (&lt;a href="https://github.com/onurcelep/ai-factory" class="external-link" target="_blank" rel="noopener"&gt;ai-factory&lt;/a&gt;).&lt;/p&gt;</description></item></channel></rss>

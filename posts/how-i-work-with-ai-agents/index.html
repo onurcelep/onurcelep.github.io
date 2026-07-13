@@ -1,12 +1,12 @@
-<!doctype html><html lang=en><head><title>One AI setup for every repo: how I work with coding agents, and why it became a factory · Onur Celep</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Onur Celep"><meta name=description content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory — and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta name=keywords content="ai development workflow,claude code setup,ai coding agents,claude github action,ai pair programming workflow,platform engineering ai,llm development setup,repo memory agents"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://onurcelep.github.io/images/og-default.png"><meta name=twitter:title content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta name=twitter:description content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory — and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta property="og:url" content="https://onurcelep.github.io/posts/how-i-work-with-ai-agents/"><meta property="og:site_name" content="Onur Celep"><meta property="og:title" content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta property="og:description" content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory — and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-07-08T00:00:00+00:00"><meta property="article:modified_time" content="2026-07-08T00:00:00+00:00"><meta property="article:tag" content="Ai"><meta property="article:tag" content="Platform-Engineering"><meta property="article:tag" content="Developer-Tooling"><meta property="article:tag" content="Workflow"><meta property="og:image" content="https://onurcelep.github.io/images/og-default.png"><link rel=canonical href=https://onurcelep.github.io/posts/how-i-work-with-ai-agents/><link rel=preload href=/fonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.4b392a85107b91dbdabc528edf014a6ab1a30cd44cafcd5325c8efe796794fca.css integrity="sha256-SzkqhRB7kdvavFKO3wFKarGjDNRMr81TJcjv55Z5T8o=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.ad48f476275974885bdc03d5251e3cdbe1678c54a63ff772376b0ed2adc468dd.css integrity="sha256-rUj0didZdIhb3APVJR482+FnjFSmP/dyN2sO0q3EaN0=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/test.min.636e467c540d2151fe5a0453c6ad51a6b323ce296f6d79c7416645f607cf8631.css integrity="sha256-Y25GfFQNIVH+WgRTxq1RprMjzilvbXnHQWZF9gfPhjE=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/favicon.svg sizes=any><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5><meta name=google-site-verification content="wWOX-rw7PzNRkxfrWuu3JGuuCruPCcDUSM1nVGK55hY"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta name=twitter:image:alt content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"\"https://onurcelep.github.io/posts/how-i-work-with-ai-agents/\""},"headline":"\"One AI setup for every repo: how I work with coding agents, and why it became a factory\"","description":"\"The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory — and why maintaining it across repos turned into a stamped, versioned platform (ai-factory).\"","image":"\"https://onurcelep.github.io/images/og-default.png\"","datePublished":"\"2026-07-08T00:00:00Z\"","dateModified":"\"2026-07-08T00:00:00Z\"","author":{"@type":"Person","name":"\"Onur Celep\"","url":"\"https://onurcelep.github.io/\""},"publisher":{"@type":"Person","name":"\"Onur Celep\""}}</script></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://onurcelep.github.io/>Onur Celep
+<!doctype html><html lang=en><head><title>One AI setup for every repo: how I work with coding agents, and why it became a factory · Onur Celep</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light dark"><meta name=author content="Onur Celep"><meta name=description content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory, and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta name=keywords content="ai development workflow,claude code setup,ai coding agents,claude github action,ai pair programming workflow,platform engineering ai,llm development setup,repo memory agents"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://onurcelep.github.io/images/og-default.png"><meta name=twitter:title content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta name=twitter:description content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory, and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta property="og:url" content="https://onurcelep.github.io/posts/how-i-work-with-ai-agents/"><meta property="og:site_name" content="Onur Celep"><meta property="og:title" content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta property="og:description" content="The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory, and why maintaining it across repos turned into a stamped, versioned platform (ai-factory)."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-07-08T00:00:00+00:00"><meta property="article:modified_time" content="2026-07-08T00:00:00+00:00"><meta property="article:tag" content="Ai"><meta property="article:tag" content="Platform Engineering"><meta property="article:tag" content="Developer-Tooling"><meta property="article:tag" content="Workflow"><meta property="og:image" content="https://onurcelep.github.io/images/og-default.png"><link rel=canonical href=https://onurcelep.github.io/posts/how-i-work-with-ai-agents/><link rel=preload href=/fonts/fa-brands-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-regular-400.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=/fonts/fa-solid-900.woff2 as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.4b392a85107b91dbdabc528edf014a6ab1a30cd44cafcd5325c8efe796794fca.css integrity="sha256-SzkqhRB7kdvavFKO3wFKarGjDNRMr81TJcjv55Z5T8o=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.ad48f476275974885bdc03d5251e3cdbe1678c54a63ff772376b0ed2adc468dd.css integrity="sha256-rUj0didZdIhb3APVJR482+FnjFSmP/dyN2sO0q3EaN0=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/test.min.636e467c540d2151fe5a0453c6ad51a6b323ce296f6d79c7416645f607cf8631.css integrity="sha256-Y25GfFQNIVH+WgRTxq1RprMjzilvbXnHQWZF9gfPhjE=" crossorigin=anonymous media=screen><link rel=icon type=image/svg+xml href=/favicon.svg sizes=any><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/images/safari-pinned-tab.svg color=#5bbad5><meta name=google-site-verification content="wWOX-rw7PzNRkxfrWuu3JGuuCruPCcDUSM1nVGK55hY"><link rel=alternate type=application/rss+xml href=/posts/index.xml title="Posts on Onur Celep"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><meta name=twitter:image:alt content="One AI setup for every repo: how I work with coding agents, and why it became a factory"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"\"https://onurcelep.github.io/posts/how-i-work-with-ai-agents/\""},"headline":"\"One AI setup for every repo: how I work with coding agents, and why it became a factory\"","description":"\"The concrete setup behind my AI-assisted development: local sessions, cloud sessions, and CI agents sharing one set of committed rules and memory, and why maintaining it across repos turned into a stamped, versioned platform (ai-factory).\"","image":"\"https://onurcelep.github.io/images/og-default.png\"","datePublished":"\"2026-07-08T00:00:00Z\"","dateModified":"\"2026-07-08T00:00:00Z\"","author":{"@type":"Person","name":"\"Onur Celep\"","url":"\"https://onurcelep.github.io/\""},"publisher":{"@type":"Person","name":"\"Onur Celep\""}}</script></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa-solid fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://onurcelep.github.io/>Onur Celep
 </a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><i class="fa-solid fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/contact/>Contact</a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title><a class=title-link href=https://onurcelep.github.io/posts/how-i-work-with-ai-agents/>One AI setup for every repo: how I work with coding agents, and why it became a factory</a></h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fa-solid fa-calendar" aria-hidden=true></i>
 <time datetime=2026-07-08T00:00:00Z>July 8, 2026
 </time></span><span class=reading-time><i class="fa-solid fa-clock" aria-hidden=true></i>
-7-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
+8-minute read</span></div><div class=tags><i class="fa-solid fa-tag" aria-hidden=true></i>
 <span class=tag><a href=/tags/ai/>Ai</a>
 </span><span class=separator>•</span>
-<span class=tag><a href=/tags/platform-engineering/>Platform-Engineering</a>
+<span class=tag><a href=/tags/platform-engineering/>Platform Engineering</a>
 </span><span class=separator>•</span>
 <span class=tag><a href=/tags/developer-tooling/>Developer-Tooling</a>
 </span><span class=separator>•</span>
@@ -14,29 +14,40 @@
 I work, cloud sessions I fire off and forget, and agents that live in my
 repos&rsquo; CI. All three follow the same committed rules, read the same
 committed memory, and hand everything to me as a pull request that I
-merge. This post is a tour of that setup — what each piece is for, what
+merge. This post is a tour of that setup: what each piece is for, what
 actually changed in how I work, and why keeping it consistent across
 repositories eventually forced me to build a small platform for it
-(<a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a>).</p><p>The reliability chapter — the day this pipeline failed silently and what
-that taught me — is its own post:
-<a href=/posts/ai-agents-in-ci-silent-failures/>The green check that did nothing</a>.</p><h2 id=the-three-surfaces>The three surfaces
+(<a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a>).</p><p>The reliability chapter, the day this pipeline failed silently and what
+that taught me, is its own post:
+<a href=/posts/ai-agents-in-ci-silent-failures/>The green check that did nothing</a>.</p><p>Here is the whole loop, from a task to a merge:</p><div class=dg><article class=dg-node><span class=dg-marker>1</span><h4 class=dg-title>You specify the work</h4><p class=dg-kicker>GitHub issue · cloud task · local session</p><p class=dg-desc>A paragraph is often enough. Well-scoped work goes to an agent; anything with real unknowns stays a local session where you're in the loop.</p></article><div class=dg-edge><span class=dg-edge-label>same committed rules, same memory</span>
+<span class=dg-edge-line></span>
+<span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>2</span><h4 class=dg-title>An agent does it</h4><p class=dg-kicker>reads <code>CLAUDE.md</code> + <code>docs/memory/</code></p><p class=dg-desc>Local, cloud, and CI agents all follow the repo's contract and its accumulated fact files. Machine state carries nothing; the repo carries everything.</p></article><div class=dg-edge><span class=dg-edge-label>agent pushes a <code>claude/</code> branch</span>
+<span class=dg-edge-line></span>
+<span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>3</span><h4 class=dg-title>You open the pull request</h4><p class=dg-kicker>from a prefilled "Create PR" link</p><p class=dg-desc>The agent can't open the PR itself; it posts a prefilled link and you click it. The branch ruleset requires a PR for everything, so nothing reaches <code>main</code> unreviewed.</p></article><div class=dg-edge><span class=dg-edge-label>bugs + rule compliance</span>
+<span class=dg-edge-line></span>
+<span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>4</span><h4 class=dg-title>A strong model reviews it</h4><p class=dg-kicker>automatic, once per PR</p><p class=dg-desc>Every PR arrives pre-reviewed before you look at it, flagging the obvious and the subtle.</p></article><div class=dg-edge><span class=dg-edge-label>human only</span>
+<span class=dg-edge-line></span>
+<span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>5</span><h4 class=dg-title>You merge</h4><p class=dg-kicker>the one rule that never bends</p><p class=dg-desc>New learnings append to <code>docs/memory/</code> in the same PR, so the next agent starts ahead.</p></article></div><h2 id=the-three-surfaces>The three surfaces
 <a class=heading-link href=#the-three-surfaces><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><p><strong>Local sessions</strong> are where real pair work happens: a CLI agent
 (<a href=https://claude.com/claude-code class=external-link target=_blank rel=noopener>Claude Code</a>) with full access to the
 working tree, the browser, and my tools. I use it for anything with
-unknowns — debugging, design, verification that needs eyes. It can drive
+unknowns: debugging, design, verification that needs eyes. It can drive
 a headless Chrome to check its own frontend work instead of asking me to
 look.</p><p><strong>Cloud sessions</strong> run the same agent on a hosted machine, detached from
 my laptop. I use them for well-scoped tasks I can describe in a
 paragraph, often filed from a phone. They push branches under my account
-and the result is a PR waiting when I&rsquo;m back.</p><p><strong>CI agents</strong> live in GitHub Actions, in every repo. Two workflows:</p><ul><li>An <strong>interactive responder</strong>. I open an issue describing a change and
+and the result is a PR waiting when I&rsquo;m back.</p><p><strong>CI agents</strong> live in GitHub Actions, in every repo. Two agent workflows,
+plus a smoke test that proves they work:</p><ul><li>An <strong>interactive responder</strong>. I open an issue describing a change and
 tag <code>@claude</code>; an agent checks out the repo, does the work, pushes a
-<code>claude/</code> branch, and posts a &ldquo;create PR&rdquo; link. It cannot touch <code>main</code>
-— a branch ruleset requires a pull request for everything, and the
-agent holds no bypass.</li><li>An <strong>automatic reviewer</strong>. Every PR — mine or an agent&rsquo;s — gets one
+<code>claude/</code> branch, and posts a &ldquo;create PR&rdquo; link. It cannot touch <code>main</code>:
+a branch ruleset requires a pull request for everything, and the
+agent holds no bypass.</li><li>An <strong>automatic reviewer</strong>. Every PR, mine or an agent&rsquo;s, gets one
 review from a strong model before I look at it, checking both bugs and
 compliance with the repo&rsquo;s rules. It has caught real bugs in code that
-another agent wrote the same day.</li></ul><p>A human merges everything, everywhere. That is the one rule that never
+another agent wrote the same day.</li><li>A <strong>smoke test</strong>. A third workflow files a trivial issue on demand and
+watches the full issue → branch → PR → review loop complete once. Proof
+the pipeline actually runs, not just that its checks are green.</li></ul><p>A human merges everything, everywhere. That is the one rule that never
 bends, and it is enforced by branch protection rather than by trust.</p><h2 id=the-pieces-that-make-agents-useful>The pieces that make agents useful
 <a class=heading-link href=#the-pieces-that-make-agents-useful><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><p>The agents themselves are a commodity; the leverage is in what they&rsquo;re
@@ -44,7 +55,7 @@ given to work with. Four things, all committed to the repo:</p><p><strong>A cont
 ships here: branch-and-PR discipline, what a merge triggers, project
 hard rules, domain gotchas. Local, cloud, and CI agents all read it. Mine
 are layered: a standard block shared by all repos, and a <code>## Project</code>
-section the repo owns forever — more on that split below.</p><p><strong>Committed memory: <code>docs/memory/</code>.</strong> An index plus one small fact file
+section the repo owns forever. More on that split below.</p><p><strong>Committed memory: <code>docs/memory/</code>.</strong> An index plus one small fact file
 per hard-won lesson (&ldquo;this service worker caches aggressively, bump the
 version&rdquo;; &ldquo;this failure signature means the token, not the code&rdquo;).
 Agents read the index before nontrivial work and append new facts in the
@@ -52,8 +63,8 @@ same PR as the fix. Because it&rsquo;s in the repo, a cloud agent on a fresh
 machine knows what my laptop session learned last week. Machine state
 carries nothing; the repo carries everything.</p><p><strong>Process skills.</strong> Reusable playbooks (debugging discipline, review
 checklists, release flow, incident response for the agents themselves)
-packaged as a plugin that every session loads. Skills update centrally
-and reach all repos at once — no copying.</p><p><strong>Model routing.</strong> Not every task deserves the expensive model. Cheap
+packaged as plugins that load at session start. Skills update centrally
+and reach all repos at once, no copying.</p><p><strong>Model routing.</strong> Not every task deserves the expensive model. Cheap
 models transcribe fully-specified plans, mid-tier models handle judgment
 and fixes and the interactive responder (turn-capped as a circuit
 breaker), and the strongest models do research, design, and the
@@ -63,29 +74,29 @@ skill, so every agent knows it.</p><h2 id=what-actually-changed>What actually ch
 <span class=sr-only>Link to heading</span></a></h2><p>The honest version, not the demo version:</p><ul><li><strong>Small, well-specified work leaves my plate entirely.</strong> &ldquo;Add the
 Firefox store link to the README&rdquo; is an issue I file in thirty
 seconds; a reviewed PR exists minutes later. The bar for delegation is
-&ldquo;can I specify it in a paragraph&rdquo; — anything with real unknowns stays
+&ldquo;can I specify it in a paragraph&rdquo;; anything with real unknowns stays
 in a local session where I&rsquo;m in the loop.</li><li><strong>Review is no longer something I schedule.</strong> Every PR arrives
 pre-reviewed. I still read the diff, but I read it after a strong
 model already flagged the obvious and the subtle. As a solo
 consultant, that&rsquo;s the closest thing to a second pair of senior eyes
 on everything.</li><li><strong>Knowledge stops evaporating.</strong> The memory convention sounds trivial
 and is the piece I&rsquo;d defend hardest. Sessions end, context windows
-fill, machines differ — but the fact files accumulate, and every agent
+fill, machines differ, but the fact files accumulate, and every agent
 type reads them.</li><li><strong>I merge more and type less.</strong> My recurring interaction with most
-changes is reading a diff and clicking merge. The judgment work —
-what to build, whether it&rsquo;s right, whether it ships — stays mine.</li></ul><h2 id=why-it-became-a-factory>Why it became a factory
+changes is reading a diff and clicking merge. The judgment work, what
+to build, whether it&rsquo;s right, whether it ships, stays mine.</li></ul><h2 id=why-it-became-a-factory>Why it became a factory
 <a class=heading-link href=#why-it-became-a-factory><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><p>All of the above is roughly ten files of configuration per repository:
-two workflows with the right permissions and model pins, settings wiring
-for the plugin, the CLAUDE.md contract, the memory index, a secret, an
-app installation, a branch ruleset. The first repo, you write by hand.
-The second repo, you copy from the first — and now you have drift. The
-third repo, the copies disagree in ways nobody notices, because
-misconfigured agent pipelines don&rsquo;t fail loudly; they
+three workflows with the right permissions and model pins, settings
+wiring for the plugin, the CLAUDE.md contract, the memory index, a
+secret, an app installation, a branch ruleset. The first repo, you write
+by hand. The second repo, you copy from the first, and now you have
+drift. The third repo, the copies disagree in ways nobody notices,
+because misconfigured agent pipelines don&rsquo;t fail loudly; they
 <a href=/posts/ai-agents-in-ci-silent-failures/>fail silently</a>.</p><p>I&rsquo;ve spent years building internal platforms and CI at scale, and this
 is the same problem shape: shared configuration that must stay
 consistent across many consumers, evolve centrally, and never destroy
-local customization. So it got the same treatment, as a public repo:</p><ul><li><strong>One command stamps a repo</strong> — new or existing. Existing content is
+local customization. So it got the same treatment, as a public repo:</p><ul><li><strong>One command stamps a repo</strong>, new or existing. Existing content is
 never overwritten: the CLAUDE.md standard block is marker-fenced, and
 everything outside the markers belongs to the repo forever. Setup ends
 with a mandatory smoke test: file a trivial issue, watch the full
@@ -93,42 +104,42 @@ issue → branch → PR → review loop complete once. A pipeline that has
 never completed one loop is not set up.</li><li><strong>Skills update everywhere at once</strong> (they load from the plugin
 marketplace at session start); <strong>templates are versioned snapshots</strong>
 per repo, with a machine-readable version stamp.</li><li><strong>Updates propagate as PRs.</strong> When the standard changes, a workflow
-finds stale repos by their stamp and files each one an update task —
+finds stale repos by their stamp and files each one an update task,
 addressed to that repo&rsquo;s own CI agent, which prepares the PR. I keep
 the merge button; the toil is gone.</li><li><strong>The standard audits itself weekly.</strong> A scheduled agent researches
-what changed upstream — the action&rsquo;s inputs, the model lineup, new
-platform capabilities — and opens one small, referenced PR when the
+what changed upstream (the action&rsquo;s inputs, the model lineup, new
+platform capabilities) and opens one small, referenced PR when the
 templates have fallen behind. Ideas that would restructure the
 factory never ship as code; they&rsquo;re filed as proposals for me to
 judge. The setup stays current without me watching release notes.</li><li><strong>A validation suite guards the whole thing</strong>, and the repo dogfoods
 its own templates, so the standard can&rsquo;t silently drift from what it
-stamps.</li></ul><p>None of the mechanism is exotic — it composes official Claude Code
+stamps.</li></ul><p>None of the mechanism is exotic. It composes official Claude Code
 features (the GitHub Action, plugins, skills, CLAUDE.md). Plenty of
 public templates wire up something similar. What I wanted, and couldn&rsquo;t
 fork from anywhere, was the <em>platform</em> semantics: versioned, validated,
 propagated, with ownership boundaries that survive updates. That&rsquo;s
-<a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a> — opinionated,
+<a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>ai-factory</a>: opinionated,
 maintained, and forkable (one script repoints it at your own GitHub
 user, and the reasoning behind every default is written down).</p><h2 id=the-costs-honestly>The costs, honestly
 <a class=heading-link href=#the-costs-honestly><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><ul><li><strong>It runs on a subscription</strong>, and heavy agent use consumes it. Model
 routing exists precisely because sending everything to the strongest
-model is neither necessary nor cheap.</li><li><strong>Reviews take minutes, not seconds</strong> — a thorough model review of a
+model is neither necessary nor cheap.</li><li><strong>Reviews take minutes, not seconds.</strong> A thorough model review of a
 large diff runs 10+ minutes. Worth it once per PR; you wouldn&rsquo;t want
 it per keystroke.</li><li><strong>It&rsquo;s a single-vendor bet.</strong> I consolidated on one ecosystem
 deliberately: the integration surface (action + plugins + skills +
 memory conventions) is where the value lives, and splitting it across
-vendors would halve the leverage. The committed artifacts — rules,
-memory, workflows — are plain text and would port.</li><li><strong>The reliability work is real.</strong> Agents in CI fail in ways dashboards
-don&rsquo;t show, and the guardrails for that had to be earned —
-<a href=/posts/ai-agents-in-ci-silent-failures/>that story is part two</a>.</li></ul><h2 id=where-to-start>Where to start
+vendors would halve the leverage. The committed artifacts (rules,
+memory, workflows) are plain text and would port.</li><li><strong>The reliability work is real.</strong> Agents in CI fail in ways dashboards
+don&rsquo;t show, and the guardrails for that had to be earned.
+<a href=/posts/ai-agents-in-ci-silent-failures/>That story is part two</a>.</li></ul><h2 id=where-to-start>Where to start
 <a class=heading-link href=#where-to-start><i class="fa-solid fa-link" aria-hidden=true title="Link to heading"></i>
 <span class=sr-only>Link to heading</span></a></h2><p>Not with the factory. Start with one repo: a <code>CLAUDE.md</code> that states how
-work ships, the two workflows, branch protection, and the smoke test.
-Live with it for a week; let the review gate and the memory convention
-prove themselves. The factory step only makes sense when the second and
-third repo make you copy files — but when that day comes, you&rsquo;ll want
-the platform treatment from the start:
+work ships, the two agent workflows, branch protection, and the smoke
+test. Live with it for a week; let the review gate and the memory
+convention prove themselves. The factory step only makes sense when the
+second and third repo make you copy files. When that day comes, you&rsquo;ll
+want the platform treatment from the start:
 <a href=https://github.com/onurcelep/ai-factory class=external-link target=_blank rel=noopener>github.com/onurcelep/ai-factory</a>.</p></div><footer></footer></article></section></div><footer class=footer><section class=container>©
 2026
 Onur Celep</section></footer></main><script src=/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script><script async defer data-website-id=f34eee1c-8d81-47bd-b5e1-c63d3fd71e64 src=https://cloud.umami.is/script.js></script></body></html>
