@@ -14,7 +14,7 @@ author = "Onur Celep"
 # Default social-share image (1200x630). Hugo's internal opengraph and
 # twitter_cards templates fall back to this for any page without its own
 # images, which also upgrades the Twitter card to summary_large_image.
-images = ["images/social-card.png"]
+images = ["images/social-preview.png"]
 umami = { siteID = "f34eee1c-8d81-47bd-b5e1-c63d3fd71e64", scriptURL = "https://cloud.umami.is/script.js" }
 # license = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA-4.0</a>'
 description = "Onur Celep — Freelance Platform & CI/CD Engineer offering DevOps consulting, test automation, and infrastructure as code services in Germany and remote."
