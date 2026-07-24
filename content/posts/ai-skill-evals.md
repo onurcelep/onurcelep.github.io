@@ -2,7 +2,7 @@
 title = "AI agent rules break silently. Test them."
 date = 2026-07-12
 description = "AI agents follow rules written in markdown, and markdown breaks silently. This post shows how to test those rules in three tiers, with examples. The first run caught an agent violating a rule that was loaded in its context."
-keywords = ["ai agent evals", "claude code skills", "llm agent testing", "skill evaluation", "ai platform engineering", "agent reliability", "prompt regression testing", "model migration llm"]
+keywords = ["ai agent rules", "testing ai agents", "ai agent evals", "agent instruction files", "AGENTS.md", "claude code skills", "llm agent testing", "prompt regression testing", "agent reliability", "ai agent loopholes"]
 tags = ["ai", "platform-engineering", "testing", "developer-tooling"]
 draft = false
 +++
