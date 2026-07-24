@@ -53,7 +53,7 @@ Two ways, both silent:
 Neither looks like a failure. Nothing crashes, nothing goes red. The
 agent just **behaves as if the rule doesn't exist**.
 
-There's also a deadline. Models get replaced. My plan for that day is
+Models also get replaced eventually. My plan for that day is
 that quality lives in the rules, not in the model's judgment. If I
 can't measure whether the rules survive a model change, I don't have
 rules. I have hope.
