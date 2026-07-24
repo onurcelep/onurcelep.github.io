@@ -34,7 +34,7 @@ that was loaded in its context.</p><h2 id=how-does-a-rule-fail>How does a rule f
 <span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>2</span><h4 class=dg-title>The agent loads it</h4><p class=dg-kicker>failure point 1 &#183; it may never load</p><p class=dg-desc>Skills load when the model decides they are relevant, based on a one-line description. If that description drifts from how people actually ask, the rule stops showing up. No error, no log line.</p></article><div class=dg-edge><span class=dg-edge-label>prose, interpreted every time</span>
 <span class=dg-edge-line></span>
 <span class=dg-edge-tip></span></div><article class=dg-node><span class=dg-marker>3</span><h4 class=dg-title>The agent acts on it</h4><p class=dg-kicker>failure point 2 &#183; loaded is not followed</p><p class=dg-desc>A loaded rule is still just text. A new model version or an edge case the wording never covered, and the agent does the thing the rule was meant to prevent. Every check stays green.</p></article></div><p>Neither looks like a failure. Nothing crashes, nothing goes red. The
-agent just <strong>behaves as if the rule doesn&rsquo;t exist</strong>.</p><p>There&rsquo;s also a deadline. Models get replaced. My plan for that day is
+agent just <strong>behaves as if the rule doesn&rsquo;t exist</strong>.</p><p>Models also get replaced eventually. My plan for that day is
 that quality lives in the rules, not in the model&rsquo;s judgment. If I
 can&rsquo;t measure whether the rules survive a model change, I don&rsquo;t have
 rules. I have hope.</p><h2 id=how-do-i-test-them>How do I test them?
