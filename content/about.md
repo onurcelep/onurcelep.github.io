@@ -14,33 +14,33 @@ My focus is the tooling that lets engineering organizations ship reliably: build
 
 ## Experience
 
-Software Engineer
+__Software Engineer__
 : [Linutronix (Intel)](https://www.linutronix.de/), since 2024
 
-Tech Lead, freelance
+__Tech Lead, freelance__
 : [Mbition (Mercedes-Benz)](https://mbition.io/), 2022 - 2023
 
-Staff Software Engineer
+__Staff Software Engineer__
 : [Mbition (Mercedes-Benz)](https://mbition.io/), 2020 - 2022
 
-Senior Software Engineer (DevOps)
+__Senior Software Engineer (DevOps)__
 : [Luxoft](https://www.luxoft.com/), 2018 - 2020
 
-QA Automation Engineer
+__QA Automation Engineer__
 : [trivago](https://www.trivago.com/), 2017 - 2018
 
-Software Developer in Test
+__Software Developer in Test__
 : [Ericsson](https://www.ericsson.com/en), 2013 - 2017
 
 ## Open Source
 
-[labgrid-mcp](https://github.com/onurcelep/labgrid-mcp)
+__[labgrid-mcp](https://github.com/onurcelep/labgrid-mcp)__
 : MCP server for hardware-in-the-loop device control.
 
-[ai-factory](https://github.com/onurcelep/ai-factory)
+__[ai-factory](https://github.com/onurcelep/ai-factory)__
 : Agent-ready repository setup for Claude Code.
 
-[picokvm-client](https://github.com/onurcelep/picokvm-client)
+__[picokvm-client](https://github.com/onurcelep/picokvm-client)__
 : Python client for the Luckfox PicoKVM.
 
 ## Tools
