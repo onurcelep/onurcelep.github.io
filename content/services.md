@@ -8,19 +8,19 @@ tags = ["platform engineering", "CI/CD", "test automation", "agent tooling", "in
 Consulting, architecture review, and hands-on implementation, backed by engineering work at Mercedes-Benz, Intel, and Ericsson since 2013.
 
 __{{< svg "fas fa-layer-group" >}}&emsp;Platform Engineering & Developer Experience__
-: _Internal developer platforms, tooling, and workflows that engineering teams rely on every day._
+: Internal platforms, tooling, and workflows for engineering teams.
 
 __{{< svg "fas fa-sitemap" >}}&emsp;CI/CD & Build Infrastructure__
-: _Pipeline architecture and delivery, from first design to operation at scale._
+: Pipeline architecture, implementation, and operation at scale.
 
 __{{< svg "fas fa-flask-vial" >}}&emsp;Test Automation & Hardware-in-the-Loop__
-: _Test strategy and frameworks, device labs, and embedded test environments._
+: Test strategy, frameworks, device labs, and embedded test environments.
 
 __{{< svg "fas fa-robot" >}}&emsp;Agent Tooling & MCP Integrations__
-: _Safe, useful access for coding agents to developer workflows and test hardware._
+: Coding agents connected safely to developer workflows and test hardware.
 
 __{{< svg "fas fa-server" >}}&emsp;Infrastructure as Code__
-: _Reproducible, version-controlled infrastructure and environments._
+: Reproducible, version-controlled infrastructure and environments.
 
 __{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
-: _Cross-team architecture, ways of working, KPI definition, and mentorship._
+: Cross-team architecture, ways of working, KPIs, and mentorship.

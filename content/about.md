@@ -15,33 +15,33 @@ My focus is the tooling that lets engineering organizations ship reliably: build
 ## Experience
 
 Software Engineer
-: _[Linutronix (Intel)](https://www.linutronix.de/), since 2024_
+: [Linutronix (Intel)](https://www.linutronix.de/), since 2024
 
 Tech Lead, freelance
-: _[Mbition (Mercedes-Benz)](https://mbition.io/), 2022 - 2023_
+: [Mbition (Mercedes-Benz)](https://mbition.io/), 2022 - 2023
 
 Staff Software Engineer
-: _[Mbition (Mercedes-Benz)](https://mbition.io/), 2020 - 2022_
+: [Mbition (Mercedes-Benz)](https://mbition.io/), 2020 - 2022
 
 Senior Software Engineer (DevOps)
-: _[Luxoft](https://www.luxoft.com/), 2018 - 2020_
+: [Luxoft](https://www.luxoft.com/), 2018 - 2020
 
 QA Automation Engineer
-: _[trivago](https://www.trivago.com/), 2017 - 2018_
+: [trivago](https://www.trivago.com/), 2017 - 2018
 
 Software Developer in Test
-: _[Ericsson](https://www.ericsson.com/en), 2013 - 2017_
+: [Ericsson](https://www.ericsson.com/en), 2013 - 2017
 
 ## Open Source
 
 [labgrid-mcp](https://github.com/onurcelep/labgrid-mcp)
-: _MCP server for hardware-in-the-loop device control._
+: MCP server for hardware-in-the-loop device control.
 
 [ai-factory](https://github.com/onurcelep/ai-factory)
-: _Agent-ready repository setup for Claude Code._
+: Agent-ready repository setup for Claude Code.
 
 [picokvm-client](https://github.com/onurcelep/picokvm-client)
-: _Python client for the Luckfox PicoKVM._
+: Python client for the Luckfox PicoKVM.
 
 ## Tools
 
