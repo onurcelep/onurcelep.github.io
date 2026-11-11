@@ -5,7 +5,7 @@ slug = "Services"
 tags = ["DevOps", "CI/CD", "test automation", "infrastructure as code", "consulting"]
 +++
 
-10+ years of engineering experience across Mercedes-Benz, Intel, and Ericsson. Available for consulting, architecture review, and hands-on implementation.
+13+ years of engineering experience across Mercedes-Benz, Intel, and Ericsson. Available for consulting, architecture review, and hands-on implementation.
 
 __{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
 : _DevOps transformation, team structure, KPI definition, and ways of working. Previously led 3 engineering teams at Mercedes-Benz._
