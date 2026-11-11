@@ -1,61 +1,54 @@
 +++
 title = "About"
-description = "Onur Celep — Platform and CI/CD engineer with 10+ years of experience in DevOps, test automation, and cloud infrastructure. Based in Germany, available for freelance consulting."
+description = "Onur Celep — Staff-level software engineer in Berlin, building developer platforms, CI/CD systems, and test infrastructure since 2013. Available for freelance consulting."
 date = "2022-12-09"
 aliases = ["about-us", "about-onur", "contact"]
 author = "Onur Celep"
-tags = ["DevOps engineer", "platform engineering", "CI/CD", "freelance consultant"]
+tags = ["platform engineering", "CI/CD", "test infrastructure", "agent tooling", "freelance consultant"]
 +++
 
 
-## Who I am?
+I am a staff-level software engineer based in Berlin. Since 2013 I have built developer platforms, CI/CD systems, and test infrastructure for products at Mercedes-Benz, Intel, Ericsson, and trivago.
 
-A passionate software engineer with 10+ years of experience. A detail-oriented, communicative, adaptable engineer who specializes in analysis, design, and implementation of CI/CD and software test automation systems. Contributed development process of several high-volume and revenue software products. Interested in cloud systems, CI/CD, performance & automation test development areas.
+My focus is the tooling that lets engineering organizations ship reliably: build and test pipelines, hardware-in-the-loop labs, and agent tooling that fits safely alongside them.
 
-## My Career
+## Experience
 
-### Software Consultancy
+__Software Engineer__
+: [Linutronix (Intel)](https://www.linutronix.de/), since 2024
 
-Providing technical consultancy and leadership services in CI/CD design and implementation, release management and
-automation, data visualization, root cause analysis, technical way of working and KPI definition, team building areas.
+__Tech Lead, freelance__
+: [Mbition (Mercedes-Benz)](https://mbition.io/), 2022 - 2023
 
-#### Contracts
+__Staff Software Engineer__
+: [Mbition (Mercedes-Benz)](https://mbition.io/), 2020 - 2022
 
-Tech Lead (3 Teams)
-: _[Mercedes-Benz Group](https://group.mercedes-benz.com/en/) (Berlin-DE, Sep 2022 - Apr 2023)_
+__Senior Software Engineer (DevOps)__
+: [Luxoft](https://www.luxoft.com/), 2018 - 2020
 
-### Full-time Positions
+__QA Automation Engineer__
+: [trivago](https://www.trivago.com/), 2017 - 2018
 
-Software Engineer
-: _[Linutronix (Intel)](https://www.linutronix.de/) (Remote-DE, Sep 2024)_
+__Software Developer in Test__
+: [Ericsson](https://www.ericsson.com/en), 2013 - 2017
 
-Staff Software Engineer
-: _[Mbition GmbH (Mercedes-Benz Innovation Lab)](https://mbition.io/) (Berlin-DE, May 2020 - Sep 2022)_
+## Open Source
 
-Senior DevOps Engineer
-: _[LUXOFT GmbH](https://www.luxoft.com/) (Berlin-DE, May 2018 - May 2020)_
+__[labgrid-mcp](https://github.com/onurcelep/labgrid-mcp)__
+: MCP server for hardware-in-the-loop device control.
 
-QA Automation Engineer
-: _[trivago N.V](https://www.trivago.com/) (Dusseldorf-DE, Oct 2017 – May 2018)_
+__[ai-factory](https://github.com/onurcelep/ai-factory)__
+: Agent-ready repository setup for Claude Code.
 
-Software Developer in Test
-: _[ERICSSON](https://www.ericsson.com/en) (Izmir-TR & Toronto-CA , Sep 2013 – Sep 2017)_
+__[picokvm-client](https://github.com/onurcelep/picokvm-client)__
+: Python client for the Luckfox PicoKVM.
 
+## Tools
 
-### Tech Stack
+**Languages:** Python, Java, Groovy, C#, Bash, C
 
-**Languages:** Python, Java EE, Groovy, C#, Shell, C, Go
+**Infrastructure:** Terraform, SaltStack, Ansible, Docker, Linux, Yocto
 
-**Frameworks:** Tornado, FastAPI, Typer, Textual
+**CI/CD & Testing:** Jenkins, GitLab CI, GitHub Actions, Robot Framework, Labgrid
 
-**Cloud & Infrastructure:** AWS, K8s, Docker, Terraform, Saltstack, Keycloak, Step-CA
-
-**CI/CD:** Jenkins, GitLab CI, GitHub Actions
-
-**Observability:** Grafana, Prometheus, Vector , Alloy
-
-**Testing:** Robot Framework, Selenium , Labgrid
-
-**Databases:** Oracle DB, PostgreSQL
-
-**Other:** Jira, Xray, Confluence, Artifactory, Keycloak, Yocto, Claude CLI
+**Observability:** Prometheus, Grafana, Loki

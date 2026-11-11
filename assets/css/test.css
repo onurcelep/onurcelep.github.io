@@ -254,3 +254,15 @@ body.colorscheme-dark .home-section{ border-top-color:rgba(255,255,255,.14); }
 @media (prefers-color-scheme: dark){
   body.colorscheme-auto .home-section{ border-top-color:rgba(255,255,255,.14); }
 }
+
+/* =========================================================================
+   Definition lists (services, about): browser defaults leave no gap between
+   entries, so a description reads as attached to the next term as much as
+   to its own. Space the entries and tighten the description under its term.
+   ========================================================================= */
+dl dt{ margin-top:2rem; }
+dl dt:first-child{ margin-top:0; }
+dl dd{ line-height:1.5; margin:.2rem 0 0; opacity:.82; }
+/* Terms that start with an icon (services) keep the description indented
+   to the title text; plain terms (about) get it flush left under the term. */
+dl dt:has(svg) + dd{ margin-left:3.9rem; }
