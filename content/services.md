@@ -1,29 +1,26 @@
 +++
 title = "Services"
-description = "Freelance DevOps and CI/CD consulting services by Onur Celep — architecture design, CI/CD implementation, test automation, infrastructure as code, and API development."
+description = "Freelance platform and CI/CD consulting by Onur Celep — developer platforms, CI/CD architecture, test automation and hardware-in-the-loop, agent tooling, and infrastructure as code."
 slug = "Services"
-tags = ["DevOps", "CI/CD", "test automation", "infrastructure as code", "consulting"]
+tags = ["platform engineering", "CI/CD", "test automation", "agent tooling", "infrastructure as code", "consulting"]
 +++
 
-13+ years of engineering experience across Mercedes-Benz, Intel, and Ericsson. Available for consulting, architecture review, and hands-on implementation.
+Consulting, architecture review, and hands-on implementation, backed by engineering work at Mercedes-Benz, Intel, and Ericsson since 2013.
+
+__{{< svg "fas fa-layer-group" >}}&emsp;Platform Engineering & Developer Experience__
+: _Internal developer platforms, tooling, and workflows that engineering teams rely on every day._
+
+__{{< svg "fas fa-sitemap" >}}&emsp;CI/CD & Build Infrastructure__
+: _Pipeline architecture and delivery, from first design to operation at scale._
+
+__{{< svg "fas fa-flask-vial" >}}&emsp;Test Automation & Hardware-in-the-Loop__
+: _Test strategy and frameworks, device labs, and embedded test environments._
+
+__{{< svg "fas fa-robot" >}}&emsp;Agent Tooling & MCP Integrations__
+: _Safe, useful access for coding agents to developer workflows and test hardware._
+
+__{{< svg "fas fa-server" >}}&emsp;Infrastructure as Code__
+: _Reproducible, version-controlled infrastructure and environments._
 
 __{{< svg "fas fa-rocket" >}}&emsp;Technical Leadership__
-: _DevOps transformation, team structure, KPI definition, and ways of working. Previously led 3 engineering teams at Mercedes-Benz._
-
-__{{< svg "fas fa-sitemap" >}}&emsp;CI/CD Architecture & Implementation__
-: _End-to-end pipeline design and delivery. Proven at scale with 200+ engineer organizations._
-
-__{{< svg "fas fa-cloud" >}}&emsp;Infrastructure As Code__
-: _Reproducible, version-controlled infrastructure. Cloud and on-prem._
-
-__{{< svg "fas fa-flask-vial" >}}&emsp;Test Automation & E2E Frameworks__
-: _Test strategy, framework design, and implementation — from unit to full end-to-end coverage._
-
-__{{< svg "fas fa-microchip" >}}&emsp;Test Infrastructure & Hardware Management__
-: _Physical and virtual test environments at scale. Device farms, hardware-in-the-loop, lab infrastructure. Automotive and embedded domain expertise._
-
-__{{< svg "fas fa-robot" >}}&emsp;Platform Engineering & Developer Tooling__
-: _Internal developer platforms, containerized environments, observability, and self-service deployment workflows._
-
-__{{< svg "fas fa-gauge-high" >}}&emsp;Performance Testing & Analysis__
-: _Load testing, bottleneck identification, root cause analysis, and actionable optimization recommendations._
+: _Cross-team architecture, ways of working, KPI definition, and mentorship._
